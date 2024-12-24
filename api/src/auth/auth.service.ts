@@ -147,6 +147,39 @@ export class AuthService extends CrudService<Auth> {
     return { nonce };
   }
 
+  async verifyNonce(nonce: string | undefined): Promise<User | null> {
+    if (!nonce) {
+      return null;
+    }
+
+    try {
+      this.jwtService.verify(
+        nonce,
+        {
+          ignoreExpiration: false,
+        },
+      );
+    } catch (_error) {
+      await this.repository.delete({ token: nonce, type: TokenType.Nonce });
+      return null;
+    }
+
+    const auth = await this.repository.findOne({
+      where: { token: nonce, type: TokenType.Nonce },
+      relations: { user: true },
+    });
+
+    if (!auth) {
+      return null;
+    }
+
+    const user = auth.user;
+
+    await this.repository.remove(auth);
+
+    return user;
+  }
+
   private generateTokens({ id, username, email }: DeepPartial<User>): AuthDto {
     const payload: Omit<JwtPayload, "type"> = {
       sub: id,
