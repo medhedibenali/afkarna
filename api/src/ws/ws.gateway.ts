@@ -13,14 +13,14 @@ import { User } from "src/users/entities/user.entity";
   },
 })
 export class WsGateway implements OnGatewayConnection {
-  handleConnection(client: Socket, ..._args: any[]) {
+  handleConnection(client: Socket, ..._args: unknown[]) {
     const user: User | null = client.data.user;
 
     if (!user) {
       return;
     }
 
-    client.join(`users/${user.username}`);
+    client.join(`user:${user.id}`);
   }
 
   @SubscribeMessage("ping")
