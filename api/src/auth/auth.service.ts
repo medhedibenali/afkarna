@@ -11,7 +11,7 @@ import { JwtService } from "@nestjs/jwt";
 import { AuthDto } from "./dto/auth.dto";
 import { User } from "../users/entities/user.entity";
 import { hash, verify } from "argon2";
-import { UpdateUserLoginDto } from "./dto/update-user-login.dto";
+import { ChangePasswordDto } from "./dto/change-password.dto";
 import { CrudService } from "../common/crud/crud.service";
 import { TokenType } from "./enum/token-type.enum";
 import { RefreshDto } from "./dto/refresh.dto";
@@ -84,12 +84,12 @@ export class AuthService extends CrudService<Auth> {
 
   async updateLogin(
     id: string,
-    updateUserLoginDto: UpdateUserLoginDto,
+    changePasswordDto: ChangePasswordDto,
   ): Promise<AuthDto> {
-    const { password } = updateUserLoginDto;
-    updateUserLoginDto.password = await hash(password);
+    const { password } = changePasswordDto;
+    changePasswordDto.password = await hash(password);
 
-    const user = await this.usersService.update(id, updateUserLoginDto);
+    const user = await this.usersService.update(id, changePasswordDto);
 
     await this.disconnect(user);
 

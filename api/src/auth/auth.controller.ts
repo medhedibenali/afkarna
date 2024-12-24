@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import { RegisterUserDto } from "./dto/register-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { Public } from "./decorators/public.decorator";
-import { UpdateUserLoginDto } from "./dto/update-user-login.dto";
+import { ChangePasswordDto } from "./dto/change-password.dto";
 import { User } from "./user.decorator";
 import { User as UserEntity } from "../users/entities/user.entity";
 import { AuthDto } from "./dto/auth.dto";
@@ -47,11 +47,11 @@ export class AuthController {
     return this.authService.nonce(user);
   }
 
-  @Patch("update-login")
+  @Post("change-password")
   updateLogin(
-    @Body() updateUserLoginDto: UpdateUserLoginDto,
+    @Body() changePasswordDto: ChangePasswordDto,
     @User() { id }: UserEntity,
   ): Promise<AuthDto> {
-    return this.authService.updateLogin(id, updateUserLoginDto);
+    return this.authService.updateLogin(id, changePasswordDto);
   }
 }
