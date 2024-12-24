@@ -1,10 +1,10 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { AuthenticatedSocketIoAdapter } from "./ws/authenticated-socket-io.adapter";
+import { WsIoAdapter } from "./ws/ws-io-adapter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useWebSocketAdapter(new AuthenticatedSocketIoAdapter(app));
+  app.useWebSocketAdapter(new WsIoAdapter(app));
 
   await app.listen(3000);
 }

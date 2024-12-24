@@ -3,7 +3,7 @@ import { IoAdapter } from "@nestjs/platform-socket.io";
 import { Server, ServerOptions } from "socket.io";
 import { AuthService } from "src/auth/auth.service";
 
-export class AuthenticatedSocketIoAdapter extends IoAdapter {
+export class WsIoAdapter extends IoAdapter {
     private authService: AuthService;
 
     constructor(

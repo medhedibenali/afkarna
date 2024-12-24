@@ -1,4 +1,6 @@
 import {
+  ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   SubscribeMessage,
   WebSocketGateway,
@@ -24,12 +26,17 @@ export class WsGateway implements OnGatewayConnection {
   }
 
   @SubscribeMessage("ping")
-  handlePing(_client: unknown, _payload: unknown): string {
+  handlePing(): string {
     return "pong";
   }
 
+  @SubscribeMessage("identity")
+  handleIdentity(@MessageBody() data: unknown) {
+    return data;
+  }
+
   @SubscribeMessage("whoami")
-  handleWhoami(client: Socket, _payload: unknown): string {
+  handleWhoami(@ConnectedSocket() client: Socket): string {
     return client.data.user?.username;
   }
 }
