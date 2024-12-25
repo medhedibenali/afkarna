@@ -22,7 +22,7 @@ export class SidebarComponent {
     {
       name: 'Documents',
       type: 'folder',
-      show: false, // Initially collapsed
+      show: false, 
       children: [
         { name: 'file1.txt', type: 'file' },
         { name: 'file2.txt', type: 'file' },
@@ -57,9 +57,4 @@ export class SidebarComponent {
     },
   ];
 
-  toggleFolder(folder: TreeNode): void {
-    if (folder.type === 'folder') {
-      folder.show = !folder.show;
-    }
-  }
 }

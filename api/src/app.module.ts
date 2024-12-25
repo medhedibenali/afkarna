@@ -7,6 +7,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
 import { WsModule } from './ws/ws.module';
+import { WorkspaceItemModule } from './workspace-item/workspace-item.module';
+import { WorkspaceModule } from './workspace/workspace.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { WsModule } from './ws/ws.module';
     UsersModule,
     AuthModule,
     WsModule,
+    WorkspaceItemModule,
+    WorkspaceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
