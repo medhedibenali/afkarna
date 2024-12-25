@@ -1,0 +1,17 @@
+
+
+  .node {
+    padding: 5px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .node:hover {
+    background-color: #ddd;
+  }
+  
+  .child-nodes {
+    padding-left: 20px ;
+  }
+  
