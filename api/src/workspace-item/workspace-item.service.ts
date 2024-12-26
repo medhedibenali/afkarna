@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
 import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
+import { WorkspaceItem } from './entities/workspace-item.entity';
 
 @Injectable()
 export class WorkspaceItemService {
-  create(createWorkspaceItemDto: CreateWorkspaceItemDto) {
-    return 'This action adds a new workspaceItem';
+  constructor(
+    @InjectRepository(WorkspaceItem)
+    private readonly workspaceItemRepository: Repository<WorkspaceItem>,
+  ) {}
+
+  async create(createWorkspaceItemDto: CreateWorkspaceItemDto): Promise<WorkspaceItem> {
+    const workspaceItem = this.workspaceItemRepository.create(createWorkspaceItemDto);
+    return this.workspaceItemRepository.save(workspaceItem);
   }
 
-  findAll() {
-    return `This action returns all workspaceItem`;
+  async findAll(): Promise<WorkspaceItem[]> {
+    return this.workspaceItemRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} workspaceItem`;
+  async findOne(id: string): Promise<WorkspaceItem> {
+    const workspaceItem = await this.workspaceItemRepository.findOneById(id);
+    if (!workspaceItem) {
+      throw new NotFoundException(`WorkspaceItem with ID ${id} not found`);
+    }
+    return workspaceItem;
   }
 
-  update(id: number, updateWorkspaceItemDto: UpdateWorkspaceItemDto) {
-    return `This action updates a #${id} workspaceItem`;
+  async update(id: string, updateWorkspaceItemDto: UpdateWorkspaceItemDto): Promise<WorkspaceItem> {
+    await this.workspaceItemRepository.update(id, updateWorkspaceItemDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} workspaceItem`;
+  async remove(id: string): Promise<void> {
+    const result = await this.workspaceItemRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`WorkspaceItem with ID ${id} not found`);
+    }
   }
 }

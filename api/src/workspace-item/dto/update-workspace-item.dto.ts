@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateWorkspaceItemDto } from './create-workspace-item.dto';
+import { IsOptional, IsEnum } from 'class-validator';
 
-export class UpdateWorkspaceItemDto extends PartialType(CreateWorkspaceItemDto) {}
+export class UpdateWorkspaceItemDto {
+  @IsOptional()
+  name?: string;
+
+  @IsOptional()
+  content?: string;
+
+  @IsOptional()
+  parentId?: number;
+
+  @IsOptional()
+  workspaceId?: number;
+}
