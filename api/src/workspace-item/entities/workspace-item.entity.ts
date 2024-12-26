@@ -1,36 +1,38 @@
-import { Exclude, instanceToPlain } from "class-transformer";
-import { Workspace } from "src/workspace/entities/workspace.entity";
+import { instanceToPlain } from 'class-transformer';
+import { Workspace } from 'src/workspace/entities/workspace.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity("workspace_item")
+@Entity('workspace_item')
 export class WorkspaceItem {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: "name", nullable: false })
+  @Column({ name: 'name', nullable: false })
   name: string;
 
-  @Column({ name: "type", nullable: false ,enum: ['note', 'collection']})
+  @Column({ name: 'type', nullable: false, enum: ['note', 'collection'] })
   type: string;
 
-  @Column({ name: "content", nullable: true })
+  @Column({ name: 'content', nullable: true })
   content: string;
 
-  @OneToMany(() => WorkspaceItem, (item) => item.parent, { nullable: true , onDelete: 'CASCADE'})
-  @JoinColumn({ name: "parent_id" })
-  parent: WorkspaceItem;  
+  @ManyToOne(() => WorkspaceItem, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  parent: WorkspaceItem;
 
-  @OneToOne(() => Workspace, (workspace) => workspace.collection, { nullable: true })
+  @OneToOne(() => Workspace, (workspace) => workspace.collection, {
+    nullable: true,
+  })
   workspace: Workspace;
-
 
   @CreateDateColumn()
   createdAt: Date;

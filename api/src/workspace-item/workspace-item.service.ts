@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
-import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { WorkspaceItem } from './entities/workspace-item.entity';
+import { CrudService } from 'src/common/crud/crud.service';
 
 @Injectable()
-export class WorkspaceItemService {
+export class WorkspaceItemService extends CrudService<WorkspaceItem> {
+  constructor(
+    @InjectRepository(WorkspaceItem)
+    private workspaceItemRepository: Repository<WorkspaceItem>,
+  ) {
+    super(workspaceItemRepository);
+  }
   create(createWorkspaceItemDto: CreateWorkspaceItemDto) {
-    return 'This action adds a new workspaceItem';
+    const workspace_item = this.workspaceItemRepository.create({
+      name: createWorkspaceItemDto.name,
+      type: createWorkspaceItemDto.type,
+    });
+    return this.workspaceItemRepository.save(workspace_item);
   }
 
-  findAll() {
-    return `This action returns all workspaceItem`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} workspaceItem`;
-  }
-
-  update(id: number, updateWorkspaceItemDto: UpdateWorkspaceItemDto) {
-    return `This action updates a #${id} workspaceItem`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} workspaceItem`;
+  async findAllByParentId(parentId: string) {
+    return await this.workspaceItemRepository.find({
+      where: { parent: { id: parentId } },
+    });
   }
 }

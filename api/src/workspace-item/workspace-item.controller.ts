@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WorkspaceItemService } from './workspace-item.service';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
 import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
+import { SearchDto } from 'src/common/dto/search.dto';
 
 @Controller('workspace-item')
 export class WorkspaceItemController {
@@ -13,22 +22,25 @@ export class WorkspaceItemController {
   }
 
   @Get()
-  findAll() {
-    return this.workspaceItemService.findAll();
+  findAll(@Body() searchDto: SearchDto) {
+    return this.workspaceItemService.findAll(searchDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.workspaceItemService.findOne(+id);
+    return this.workspaceItemService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWorkspaceItemDto: UpdateWorkspaceItemDto) {
-    return this.workspaceItemService.update(+id, updateWorkspaceItemDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateWorkspaceItemDto: UpdateWorkspaceItemDto,
+  ) {
+    return this.workspaceItemService.update(id, updateWorkspaceItemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.workspaceItemService.remove(+id);
+    return this.workspaceItemService.remove(id);
   }
 }
