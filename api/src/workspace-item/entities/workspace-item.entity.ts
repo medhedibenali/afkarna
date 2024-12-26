@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -23,11 +24,14 @@ export class WorkspaceItem {
   @Column({ name: 'content', nullable: true })
   content: string;
 
-  @ManyToOne(() => WorkspaceItem, {
+  @ManyToOne(() => WorkspaceItem,(workspaceItem) => workspaceItem.children, {
     nullable: true,
     onDelete: 'CASCADE',
   })
   parent: WorkspaceItem;
+
+  @OneToMany(() => WorkspaceItem, (workspaceItem) => workspaceItem.parent)
+  children: WorkspaceItem[];
 
   @OneToOne(() => Workspace, (workspace) => workspace.collection, {
     nullable: true,
@@ -36,6 +40,8 @@ export class WorkspaceItem {
 
   @CreateDateColumn()
   createdAt: Date;
+
+
 
   toJSON() {
     return instanceToPlain(this);

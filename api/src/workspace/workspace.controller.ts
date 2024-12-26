@@ -28,7 +28,7 @@ export class WorkspaceController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.workspaceService.findOne(id);
+    return this.workspaceService.findOne(id, { collection: true });
   }
 
   @Get('collection/:id')

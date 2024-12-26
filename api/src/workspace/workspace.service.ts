@@ -25,12 +25,7 @@ export class WorkspaceService extends CrudService<Workspace> {
       collection: rootCollection,
     });
   }
-  async findOne(id: string): Promise<Workspace> {
-    return await this.workspaceRepository.findOne({
-      where: { id },
-      relations: ['collection'],
-    });
-  }
+
   async findOneByRootCollectionId(collectionId: string) {
     return await this.workspaceRepository.findOne({
       where: { collection: { id: collectionId } },

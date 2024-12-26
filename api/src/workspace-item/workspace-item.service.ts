@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WorkspaceItem } from './entities/workspace-item.entity';
 import { CrudService } from 'src/common/crud/crud.service';
+import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
 
 @Injectable()
 export class WorkspaceItemService extends CrudService<WorkspaceItem> {
@@ -13,12 +14,28 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
   ) {
     super(workspaceItemRepository);
   }
-  create(createWorkspaceItemDto: CreateWorkspaceItemDto) {
-    const workspace_item = this.workspaceItemRepository.create({
-      name: createWorkspaceItemDto.name,
-      type: createWorkspaceItemDto.type,
-    });
-    return this.workspaceItemRepository.save(workspace_item);
+
+  async create(createWorkspaceItemDto: CreateWorkspaceItemDto) {
+    if (createWorkspaceItemDto.parentId) {
+      const parent = await super.findOne(createWorkspaceItemDto.parentId);
+      if (!parent) {
+        throw new NotFoundException('Parent not found');
+      }
+      return super.create({...createWorkspaceItemDto, parent});
+    }
+
+    return super.create(createWorkspaceItemDto);
+  }
+
+  async update(id: string,updateWorkspaceItemDto:UpdateWorkspaceItemDto): Promise<WorkspaceItem> {
+      if (updateWorkspaceItemDto.parentId) {
+        const parent = await super.findOne(updateWorkspaceItemDto.parentId);
+        if (!parent) {
+          throw new NotFoundException('Parent not found');
+        }
+        return super.update(id, {...updateWorkspaceItemDto, parent});
+      }
+      return super.update(id, updateWorkspaceItemDto);
   }
 
   async findAllByParentId(parentId: string) {
@@ -26,4 +43,5 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
       where: { parent: { id: parentId } },
     });
   }
+
 }

@@ -8,8 +8,8 @@ export class UpdateWorkspaceItemDto {
   content?: string;
 
   @IsOptional()
-  parentId?: number;
+  parentId?: string;
 
   @IsOptional()
-  workspaceId?: number;
+  workspaceId?: string;
 }

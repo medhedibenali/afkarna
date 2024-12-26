@@ -28,7 +28,12 @@ export class WorkspaceItemController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.workspaceItemService.findOne(id);
+    return this.workspaceItemService.findOne(id,{children: true});
+  }
+
+  @Get('parent/:id')
+  findAllByParentId(@Param('id') id: string) {
+    return this.workspaceItemService.findAllByParentId(id);
   }
 
   @Patch(':id')
@@ -43,4 +48,5 @@ export class WorkspaceItemController {
   remove(@Param('id') id: string) {
     return this.workspaceItemService.remove(id);
   }
+
 }
