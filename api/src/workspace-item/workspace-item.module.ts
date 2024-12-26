@@ -8,5 +8,6 @@ import { WorkspaceItem } from './entities/workspace-item.entity';
   imports: [TypeOrmModule.forFeature([WorkspaceItem])],
   controllers: [WorkspaceItemController],
   providers: [WorkspaceItemService],
+  exports: [WorkspaceItemService],
 })
 export class WorkspaceItemModule {}

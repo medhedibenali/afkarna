@@ -9,11 +9,9 @@ export class CreateWorkspaceItemDto {
   type: string;
 
   @IsOptional()
-  content?: string;
-
-  @IsOptional()
   parentId?: number;
 
   @IsOptional()
   workspaceId?: number;
 }
+
