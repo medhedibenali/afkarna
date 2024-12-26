@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="signup-box">
+      <h1 class="logo">Afkarna<span class="icon">✏️</span></h1>
+      <h2 class="signup-title">Sign Up</h2>
+      <p class="login-text">Already have an account? <a [routerLink]="['/login']" routerLinkActive="active">Log in</a></p>
+  
+      <form (ngSubmit)="onSubmit()">
+      
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            [value]="name()"
+            (input)="onNameInput($event)"
+            placeholder="Enter your full name"
+          />
+          @if(nameError()){
+            <div class="error">
+              @if(nameError() === 'required'){
+                <small>FullName is required.</small>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input
+
+            type="email"
+            id="email"
+            [value]="email()"
+            (input)="onEmailInput($event)"
+            placeholder="Enter your email"
+          />
+          @if(emailError()){
+            <div class="error">
+              @if(emailError() === 'required'){
+                <small>Email is required.</small>
+              }
+              @if(emailError() === 'invalid'){
+                <small>Enter a valid email.</small>
+              }
+            </div>
+          }
+        </div>
+  
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            [value]="username()"
+            (input)="onUsernameInput($event)"
+            placeholder="Enter your username"
+          />
+          <p class="hint-text">
+            We strongly recommend adding a significant username. This will help your friends identify you.
+          </p>
+          @if(usernameError()){
+            <div class="error">
+              @if(usernameError() === 'required'){
+                <small>Username is required.</small>
+              }
+              @if(usernameError() === 'invalid'){
+                <small>Username must be at least 3 characters long.</small>
+              }
+            </div>
+          }
+        </div>
+  
+        <div class="input-group password-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input
+              [type]="passwordVisible() ? 'text' : 'password'"
+              id="password"
+              [value]="password()"
+              (input)="onPasswordInput($event)"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePasswordVisibility()"  
+              aria-label="Toggle password visibility"
+            >
+              <i [class]="passwordVisible() ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"></i>
+            </button>
+          </div>
+          <ul class="password-hints">
+            <li>Use 8 or more characters</li>
+            <li>Use upper and lower case letters (e.g. Aa)</li>
+            <li>Use a number (e.g. 1234)</li>
+            <li>Use special characters (e.g. !&#64;#$%)</li>
+          </ul>
+          @if(passwordError()){
+            <div class="error">
+                <small>Password must meet the criteria.</small>
+            </div>
+          }
+        </div>
+  
+        <button
+          type="submit"
+          class="signup-btn"
+          [disabled]="formInvalid()"
+        >
+          Sign Up
+        </button>
+        <p class="policy">By creating an account, you agree to the <u>Terms of use</u> and <u>Privacy Policy</u></p>
+      </form>
+    </div>
+  </div>
+  

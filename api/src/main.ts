@@ -1,6 +1,6 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { WsIoAdapter } from "./ws/ws-io-adapter";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { WsIoAdapter } from './ws/ws-io-adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
