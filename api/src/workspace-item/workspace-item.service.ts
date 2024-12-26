@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { WorkspaceItem } from './entities/workspace-item.entity';
 import { CrudService } from 'src/common/crud/crud.service';
 
