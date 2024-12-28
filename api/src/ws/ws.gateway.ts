@@ -9,7 +9,6 @@ import { Socket } from "socket.io";
 import { User } from "src/users/entities/user.entity";
 
 @WebSocketGateway({
-  path: "/ws/",
   cors: {
     origin: "*",
   },
