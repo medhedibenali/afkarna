@@ -218,4 +218,12 @@ export class AuthService extends CrudService<Auth> {
       expiresIn: '5m',
     });
   }
+
+  async emailExists(email: string): Promise<boolean> {
+    return !!(await this.usersService.findOneByEmail(email));
+  }
+
+  async userNameExists(userName: string): Promise<boolean> {
+    return !!(await this.usersService.findOneByUserName(userName));
+  }
 }

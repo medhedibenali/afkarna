@@ -13,4 +13,8 @@ export class UsersService extends CrudService<User> {
   findOneByEmail(email: string): Promise<User | null> {
     return this.repository.findOneBy({ email });
   }
+
+  findOneByUserName(username: string): Promise<User | null> {
+    return this.repository.findOneBy({ username });
+  }
 }

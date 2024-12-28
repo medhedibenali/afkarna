@@ -4,45 +4,33 @@
       <h2 class="signup-title">Sign Up</h2>
       <p class="login-text">Already have an account? <a [routerLink]="['/login']" routerLinkActive="active">Log in</a></p>
   
-      <form (ngSubmit)="onSubmit()">
+      <form [formGroup]="form">
       
         <div class="input-group">
           <label for="name">Full Name</label>
           <input
             type="text"
             id="name"
-            [value]="name()"
-            (input)="onNameInput($event)"
+            formControlName="name"
             placeholder="Enter your full name"
           />
-          @if(nameError()){
-            <div class="error">
-              @if(nameError() === 'required'){
-                <small>FullName is required.</small>
-              }
-            </div>
+          @if(name.invalid && (name.touched || name.dirty))
+          {
+            <small class="error">{{getErrorMessage(name)}}</small>
           }
         </div>
         
         <div class="input-group">
           <label for="email">Email</label>
           <input
-
             type="email"
             id="email"
-            [value]="email()"
-            (input)="onEmailInput($event)"
+            formControlName="email"
             placeholder="Enter your email"
           />
-          @if(emailError()){
-            <div class="error">
-              @if(emailError() === 'required'){
-                <small>Email is required.</small>
-              }
-              @if(emailError() === 'invalid'){
-                <small>Enter a valid email.</small>
-              }
-            </div>
+          @if(email.invalid && (email.touched || email.dirty))
+          {
+            <small class="error">{{getErrorMessage(email)}}</small>
           }
         </div>
   
@@ -51,22 +39,15 @@
           <input
             type="text"
             id="username"
-            [value]="username()"
-            (input)="onUsernameInput($event)"
+            formControlName="userName"
             placeholder="Enter your username"
           />
           <p class="hint-text">
             We strongly recommend adding a significant username. This will help your friends identify you.
           </p>
-          @if(usernameError()){
-            <div class="error">
-              @if(usernameError() === 'required'){
-                <small>Username is required.</small>
-              }
-              @if(usernameError() === 'invalid'){
-                <small>Username must be at least 3 characters long.</small>
-              }
-            </div>
+          @if(userName.invalid && (userName.touched || userName.dirty))
+          {
+            <small class="error">{{getErrorMessage(userName)}}</small>
           }
         </div>
   
@@ -76,8 +57,7 @@
             <input
               [type]="passwordVisible() ? 'text' : 'password'"
               id="password"
-              [value]="password()"
-              (input)="onPasswordInput($event)"
+              formControlName="password"
               placeholder="Enter your password"
             />
             <button
@@ -95,17 +75,17 @@
             <li>Use a number (e.g. 1234)</li>
             <li>Use special characters (e.g. !&#64;#$%)</li>
           </ul>
-          @if(passwordError()){
-            <div class="error">
-                <small>Password must meet the criteria.</small>
-            </div>
+          @if(password.invalid && (password.touched || password.dirty))
+          {
+            <small class="error">{{getErrorMessage(password)}}</small>
           }
         </div>
   
         <button
           type="submit"
           class="signup-btn"
-          [disabled]="formInvalid()"
+          [disabled]="form.invalid"
+          (click)="signUp()"
         >
           Sign Up
         </button>

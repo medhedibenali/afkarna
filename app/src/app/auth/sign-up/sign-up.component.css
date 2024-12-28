@@ -21,7 +21,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 550px;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .logo {

@@ -1,102 +1,105 @@
 import { Component, Signal, signal, computed } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, FormGroup } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { emailExistsValidator } from '../validators/emailExists.validators';
+import { userNameExistsValidator } from '../validators/userNameExists.validators';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignupComponent {
-  email = signal('');
-  username = signal('');
-  password = signal('');
-  name = signal('');
 
-  nameError = signal<null | string>(null);
-  emailError = signal<null | string>(null);
-  usernameError = signal<null | string>(null);
-  passwordError = signal<null | string>(null);
-
+  form: FormGroup;
   passwordVisible = signal(false);
 
-  onNameInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.name.set(input.value);
-    this.validateName();
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.form = this.formBuilder.group({
+      name: ['', 
+        Validators.required
+      ],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ], [
+        emailExistsValidator(this.authService)
+      ]],
+      userName: ['', [
+        Validators.required,
+        Validators.minLength(3)
+      ], [
+        userNameExistsValidator(this.authService)
+      ]],
+      password: ['', [
+        Validators.required, 
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!$#]).{8,}$/)
+      ]]
+    });
   }
 
-  onEmailInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.email.set(input.value);
-    this.validateEmail();
+  get name(): AbstractControl {
+    return this.form.get("name")!;
   }
 
-  onUsernameInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.username.set(input.value);
-    this.validateUsername();
+  get email(): AbstractControl {
+    return this.form.get("email")!;
   }
 
-  onPasswordInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.password.set(input.value);
-    this.validatePassword();
+  get userName(): AbstractControl {
+    return this.form.get("userName")!;
   }
 
-  validateName() {
-    if (!this.name()) {
-      this.nameError.set('required');
-    } else {
-      this.nameError.set(null);
+  get password(): AbstractControl {
+    return this.form.get("password")!;
+  }
+
+  signUp(): void {
+    if (this.form.invalid) {
+      return;
     }
-  }
-
-  validateEmail() {
-    if (!this.email()) {
-      this.emailError.set('required');
-    } else if (!this.isValidEmail(this.email())) {
-      this.emailError.set('invalid');
-    } else {
-      this.emailError.set(null);
-    }
-  }
-
-  validateUsername() {
-    if (!this.username()) {
-      this.usernameError.set('required');
-    } else if (this.username().length < 3) {
-      this.usernameError.set('invalid');
-    }else {
-      this.usernameError.set(null);
-    }
-  }
-
-  validatePassword() {
-    if (this.password().length < 8) {
-      this.passwordError.set('invalid');
-    } else {
-      this.passwordError.set(null);
-    }
-  }
-
-  isValidEmail(email: string) {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
+    const { name, email, userName, password } = this.form.value;
+    /*
+    this.authService.signUp(name, email, userName, password);
+    this.router.navigate(['/home']);
+    */
   }
 
   togglePasswordVisibility() {
     this.passwordVisible.set(!this.passwordVisible());
   }
 
-  formInvalid() {
-    return !this.name() || !this.email() || !this.username() || !this.password() || this.nameError() || this.emailError() || this.usernameError() || this.passwordError();
-  }
-
-  onSubmit() {
-    if (!this.formInvalid()) {
-      /*console.log('Form submitted');*/
+  getErrorMessage(control: AbstractControl): string {
+    if (control.hasError('required')) {
+      return 'You must enter a value';
     }
-  }
+
+    if (control.hasError('email')) {
+      return 'Not a valid email';
+    }
+
+    if (control.hasError('minlength')) {
+      return 'Must be at least 3 characters';
+    }
+
+    if (control.hasError('pattern')) {
+      return 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character';
+    }
+
+    if (control.hasError('emailExists')) {
+      return 'Email already exists';
+    }
+
+    if (control.hasError('userNameExists')) {
+      return 'Username already exists';
+    }
+    return '';
+  } 
 }
