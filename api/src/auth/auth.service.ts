@@ -153,12 +153,9 @@ export class AuthService extends CrudService<Auth> {
     }
 
     try {
-      this.jwtService.verify(
-        nonce,
-        {
-          ignoreExpiration: false,
-        },
-      );
+      this.jwtService.verify(nonce, {
+        ignoreExpiration: false,
+      });
     } catch (_error) {
       await this.repository.delete({ token: nonce, type: TokenType.Nonce });
       return null;
@@ -217,11 +214,8 @@ export class AuthService extends CrudService<Auth> {
       type: TokenType.Nonce,
     };
 
-    return this.jwtService.sign(
-      payload,
-      {
-        expiresIn: "5m",
-      },
-    );
+    return this.jwtService.sign(payload, {
+      expiresIn: "5m",
+    });
   }
 }
