@@ -7,6 +7,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
 import { WsModule } from "./ws/ws.module";
+import { ProfileModule } from "./profile/profile.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { WsModule } from "./ws/ws.module";
     UsersModule,
     AuthModule,
     WsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
