@@ -1,17 +1,17 @@
-import { Exclude, instanceToPlain } from 'class-transformer';
+import { Exclude, instanceToPlain } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('user')
+@Entity("user")
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ name: 'name', nullable: true })
+  @Column({ name: "name", nullable: true })
   name: string;
 
   @Column({ unique: true })
@@ -24,7 +24,7 @@ export class User {
   @Exclude({ toPlainOnly: true })
   password: string;
 
-  @Column({ name: 'profile_picture', nullable: true })
+  @Column({ name: "profile_picture", nullable: true })
   profilePicture: string;
 
   @CreateDateColumn()

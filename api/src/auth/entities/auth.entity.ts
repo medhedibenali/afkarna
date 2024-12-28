@@ -5,13 +5,13 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { User } from '../../users/entities/user.entity';
-import { TokenType } from '../enum/token-type.enum';
+} from "typeorm";
+import { User } from "../../users/entities/user.entity";
+import { TokenType } from "../enum/token-type.enum";
 
-@Entity('auth')
+@Entity("auth")
 export class Auth {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @ManyToOne(() => User)
@@ -22,7 +22,7 @@ export class Auth {
   token: string;
 
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: TokenType,
   })
   type: TokenType;

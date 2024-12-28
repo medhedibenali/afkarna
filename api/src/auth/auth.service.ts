@@ -2,23 +2,23 @@ import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { DeepPartial, Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { RegisterUserDto } from './dto/register-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
-import { JwtService } from '@nestjs/jwt';
-import { AuthDto } from './dto/auth.dto';
-import { User } from '../users/entities/user.entity';
-import { hash, verify } from 'argon2';
-import { ChangePasswordDto } from './dto/change-password.dto';
-import { CrudService } from '../common/crud/crud.service';
-import { TokenType } from './enum/token-type.enum';
-import { RefreshDto } from './dto/refresh.dto';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { Auth } from './entities/auth.entity';
-import { UsersService } from 'src/users/users.service';
-import { NonceDto } from './dto/nonce.dto';
+} from "@nestjs/common";
+import { DeepPartial, Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { RegisterUserDto } from "./dto/register-user.dto";
+import { LoginUserDto } from "./dto/login-user.dto";
+import { JwtService } from "@nestjs/jwt";
+import { AuthDto } from "./dto/auth.dto";
+import { User } from "../users/entities/user.entity";
+import { hash, verify } from "argon2";
+import { ChangePasswordDto } from "./dto/change-password.dto";
+import { CrudService } from "../common/crud/crud.service";
+import { TokenType } from "./enum/token-type.enum";
+import { RefreshDto } from "./dto/refresh.dto";
+import { JwtPayload } from "./interfaces/jwt-payload.interface";
+import { Auth } from "./entities/auth.entity";
+import { UsersService } from "src/users/users.service";
+import { NonceDto } from "./dto/nonce.dto";
 
 @Injectable()
 export class AuthService extends CrudService<Auth> {
@@ -107,7 +107,7 @@ export class AuthService extends CrudService<Auth> {
         throw new BadRequestException();
       }
 
-      let payload: Omit<JwtPayload, 'type'>;
+      let payload: Omit<JwtPayload, "type">;
 
       try {
         const { type: _type, ...payload_ }: JwtPayload = this.jwtService.verify(
@@ -178,7 +178,7 @@ export class AuthService extends CrudService<Auth> {
   }
 
   private generateTokens({ id, username, email }: DeepPartial<User>): AuthDto {
-    const payload: Omit<JwtPayload, 'type'> = {
+    const payload: Omit<JwtPayload, "type"> = {
       sub: id,
       username,
       email,
@@ -191,7 +191,7 @@ export class AuthService extends CrudService<Auth> {
           type: TokenType.Refresh,
         },
         {
-          expiresIn: '60d',
+          expiresIn: "60d",
         },
       ),
       accessToken: this.jwtService.sign(
@@ -200,7 +200,7 @@ export class AuthService extends CrudService<Auth> {
           type: TokenType.Access,
         },
         {
-          expiresIn: '1h',
+          expiresIn: "1h",
         },
       ),
     };
@@ -215,7 +215,7 @@ export class AuthService extends CrudService<Auth> {
     };
 
     return this.jwtService.sign(payload, {
-      expiresIn: '5m',
+      expiresIn: "5m",
     });
   }
 

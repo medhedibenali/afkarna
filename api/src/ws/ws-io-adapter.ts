@@ -1,7 +1,7 @@
-import { INestApplicationContext } from '@nestjs/common';
-import { IoAdapter } from '@nestjs/platform-socket.io';
-import { Server, ServerOptions } from 'socket.io';
-import { AuthService } from 'src/auth/auth.service';
+import { INestApplicationContext } from "@nestjs/common";
+import { IoAdapter } from "@nestjs/platform-socket.io";
+import { Server, ServerOptions } from "socket.io";
+import { AuthService } from "src/auth/auth.service";
 
 export class WsIoAdapter extends IoAdapter {
   private authService: AuthService;

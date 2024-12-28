@@ -4,14 +4,13 @@ import {
   OnGatewayConnection,
   SubscribeMessage,
   WebSocketGateway,
-} from '@nestjs/websockets';
-import { Socket } from 'socket.io';
-import { User } from 'src/users/entities/user.entity';
+} from "@nestjs/websockets";
+import { Socket } from "socket.io";
+import { User } from "src/users/entities/user.entity";
 
 @WebSocketGateway({
-  path: '/ws/',
   cors: {
-    origin: '*',
+    origin: "*",
   },
 })
 export class WsGateway implements OnGatewayConnection {
@@ -25,17 +24,17 @@ export class WsGateway implements OnGatewayConnection {
     client.join(`user:${user.id}`);
   }
 
-  @SubscribeMessage('ping')
+  @SubscribeMessage("ping")
   handlePing(): string {
-    return 'pong';
+    return "pong";
   }
 
-  @SubscribeMessage('identity')
+  @SubscribeMessage("identity")
   handleIdentity(@MessageBody() data: unknown) {
     return data;
   }
 
-  @SubscribeMessage('whoami')
+  @SubscribeMessage("whoami")
   handleWhoami(@ConnectedSocket() client: Socket): string {
     return client.data.user?.username;
   }
