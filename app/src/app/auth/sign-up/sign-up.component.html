@@ -1,96 +1,97 @@
 <div class="container">
-    <div class="signup-box">
-      <h1 class="logo">Afkarna<span class="icon">✏️</span></h1>
-      <h2 class="signup-title">Sign Up</h2>
-      <p class="login-text">Already have an account? <a [routerLink]="['/login']" routerLinkActive="active">Log in</a></p>
-  
-      <form [formGroup]="form">
-      
-        <div class="input-group">
-          <label for="name">Full Name</label>
+  <div class="sign-up-box">
+    <h1 class="titan-one-regular logo">Afkarna<span class="icon">✏️</span></h1>
+    <h2 class="titan-one-regular sign-up-title">Sign Up</h2>
+    <p class="login-text">
+      Already have an account?
+      <span
+        [routerLink]='["/auth/login"]'
+        routerLinkActive="active"
+        class="link"
+      >
+        Log in
+      </span>
+    </p>
+
+    <form [formGroup]="form">
+      <div class="input-group">
+        <label for="name">Full Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Enter your full name"
+        />
+        @if (name.invalid && name.touched) {
+          <small class="error">{{ getErrorMessage(name) }}</small>
+        }
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+        @if (email.invalid && email.touched) {
+          <small class="error">{{ getErrorMessage(email) }}</small>
+        }
+      </div>
+
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          autocomplete="username"
+          placeholder="Enter your username"
+        />
+        <p class="hint-text">
+          We strongly recommend adding a significant username. This will help
+          your friends identify you.
+        </p>
+        @if (username.invalid && username.touched) {
+          <small class="error">{{ getErrorMessage(username) }}</small>
+        }
+      </div>
+
+      <div class="input-group password-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
           <input
-            type="text"
-            id="name"
-            formControlName="name"
-            placeholder="Enter your full name"
+            type="password"
+            id="password"
+            formControlName="password"
+            autocomplete="new-password"
+            placeholder="Enter your password"
           />
-          @if(name.invalid && (name.touched || name.dirty))
-          {
-            <small class="error">{{getErrorMessage(name)}}</small>
-          }
         </div>
-        
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            placeholder="Enter your email"
-          />
-          @if(email.invalid && (email.touched || email.dirty))
-          {
-            <small class="error">{{getErrorMessage(email)}}</small>
-          }
-        </div>
-  
-        <div class="input-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            formControlName="userName"
-            placeholder="Enter your username"
-          />
-          <p class="hint-text">
-            We strongly recommend adding a significant username. This will help your friends identify you.
-          </p>
-          @if(userName.invalid && (userName.touched || userName.dirty))
-          {
-            <small class="error">{{getErrorMessage(userName)}}</small>
-          }
-        </div>
-  
-        <div class="input-group password-group">
-          <label for="password">Password</label>
-          <div class="password-wrapper">
-            <input
-              [type]="passwordVisible() ? 'text' : 'password'"
-              id="password"
-              formControlName="password"
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              class="toggle-password"
-              (click)="togglePasswordVisibility()"  
-              aria-label="Toggle password visibility"
-            >
-              <i [class]="passwordVisible() ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"></i>
-            </button>
-          </div>
-          <ul class="password-hints">
-            <li>Use 8 or more characters</li>
-            <li>Use upper and lower case letters (e.g. Aa)</li>
-            <li>Use a number (e.g. 1234)</li>
-            <li>Use special characters (e.g. !&#64;#$%)</li>
-          </ul>
-          @if(password.invalid && (password.touched || password.dirty))
-          {
-            <small class="error">{{getErrorMessage(password)}}</small>
-          }
-        </div>
-  
-        <button
-          type="submit"
-          class="signup-btn"
-          [disabled]="form.invalid"
-          (click)="signUp()"
-        >
-          Sign Up
-        </button>
-        <p class="policy">By creating an account, you agree to the <u>Terms of use</u> and <u>Privacy Policy</u></p>
-      </form>
-    </div>
+        <ul class="password-hints">
+          <li>Use 8 or more characters</li>
+          <li>Use upper and lower case letters (e.g. Aa)</li>
+          <li>Use a number (e.g. 1234)</li>
+          <li>Use special characters (e.g. !&#64;#$%)</li>
+        </ul>
+        @if (password.invalid && password.touched) {
+          <small class="error">{{ getErrorMessage(password) }}</small>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="sign-up-btn"
+        [disabled]="form.invalid"
+        (click)="signUp()"
+      >
+        Sign Up
+      </button>
+      <p class="policy">
+        By creating an account, you agree to the <u>Terms of use</u> and
+        <u>Privacy Policy</u>
+      </p>
+    </form>
   </div>
-  
+</div>

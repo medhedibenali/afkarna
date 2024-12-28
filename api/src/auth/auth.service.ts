@@ -223,7 +223,7 @@ export class AuthService extends CrudService<Auth> {
     return !!(await this.usersService.findOneByEmail(email));
   }
 
-  async userNameExists(userName: string): Promise<boolean> {
-    return !!(await this.usersService.findOneByUserName(userName));
+  async usernameExists(username: string): Promise<boolean> {
+    return !!(await this.usersService.findOneByUserName(username));
   }
 }

@@ -63,7 +63,7 @@ export class AuthController {
 
   @Get("username-exists")
   @Public()
-  userNameExists(@Query("userName") userName: string): Promise<boolean> {
-    return this.authService.userNameExists(userName);
+  usernameExists(@Query("username") username: string): Promise<boolean> {
+    return this.authService.usernameExists(username);
   }
 }

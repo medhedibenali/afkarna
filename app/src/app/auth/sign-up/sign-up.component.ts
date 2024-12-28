@@ -1,47 +1,47 @@
-import { Component, Signal, signal, computed } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, FormGroup } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { emailExistsValidator } from '../validators/emailExists.validators';
-import { userNameExistsValidator } from '../validators/userNameExists.validators';
+import { Component } from "@angular/core";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { emailExistsValidator } from "../validators/email-exists.validators";
+import { usernameExistsValidator } from "../validators/username-exists.validators";
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
+  selector: "app-sign-up",
   imports: [RouterModule, ReactiveFormsModule],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  templateUrl: "./sign-up.component.html",
+  styleUrls: ["./sign-up.component.css"],
 })
-export class SignupComponent {
-
+export class SignUpComponent {
   form: FormGroup;
-  passwordVisible = signal(false);
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
   ) {
     this.form = this.formBuilder.group({
-      name: ['', 
-        Validators.required
-      ],
-      email: ['', [
+      name: ["", Validators.required],
+      email: ["", [
         Validators.required,
-        Validators.email
+        Validators.email,
       ], [
-        emailExistsValidator(this.authService)
+        emailExistsValidator(this.authService),
       ]],
-      userName: ['', [
+      username: ["", [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
       ], [
-        userNameExistsValidator(this.authService)
+        usernameExistsValidator(this.authService),
       ]],
-      password: ['', [
-        Validators.required, 
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!$#]).{8,}$/)
-      ]]
+      password: ["", [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!$#]).{8,}$/),
+      ]],
     });
   }
 
@@ -53,53 +53,41 @@ export class SignupComponent {
     return this.form.get("email")!;
   }
 
-  get userName(): AbstractControl {
-    return this.form.get("userName")!;
+  get username(): AbstractControl {
+    return this.form.get("username")!;
   }
 
   get password(): AbstractControl {
     return this.form.get("password")!;
   }
 
-  signUp(): void {
-    if (this.form.invalid) {
-      return;
-    }
-    const { name, email, userName, password } = this.form.value;
-    /*
-    this.authService.signUp(name, email, userName, password);
-    this.router.navigate(['/home']);
-    */
-  }
-
-  togglePasswordVisibility() {
-    this.passwordVisible.set(!this.passwordVisible());
-  }
+  signUp() {}
 
   getErrorMessage(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return 'You must enter a value';
+    if (control.hasError("required")) {
+      return "You must enter a value";
     }
 
-    if (control.hasError('email')) {
-      return 'Not a valid email';
+    if (control.hasError("email")) {
+      return "Not a valid email";
     }
 
-    if (control.hasError('minlength')) {
-      return 'Must be at least 3 characters';
+    if (control.hasError("minlength")) {
+      return "Must be at least 3 characters";
     }
 
-    if (control.hasError('pattern')) {
-      return 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character';
+    if (control.hasError("pattern")) {
+      return "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character";
     }
 
-    if (control.hasError('emailExists')) {
-      return 'Email already exists';
+    if (control.hasError("emailExists")) {
+      return "Email already exists";
     }
 
-    if (control.hasError('userNameExists')) {
-      return 'Username already exists';
+    if (control.hasError("usernameExists")) {
+      return "Username already exists";
     }
-    return '';
-  } 
+
+    return "";
+  }
 }
