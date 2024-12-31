@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { WorkspaceItem } from '../model/workspace-item';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -10,9 +10,7 @@ import { API } from '../../../config/api.config';
 export class WorkspaceItemService {
   private workspacesItem: WorkspaceItem[] = []
 
-  #selectWorkspaceSuject$ = new Subject<WorkspaceItem>();
-
-  selectWorkspace$ = this.#selectWorkspaceSuject$.asObservable();
+  selectedNodeSignal = signal<WorkspaceItem | null>(null);
 
   constructor(
     private http: HttpClient

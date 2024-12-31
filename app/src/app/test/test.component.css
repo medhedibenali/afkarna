@@ -1,0 +1,13 @@
+.app-layout {
+    display: flex; 
+    height: 100vh; 
+    overflow: hidden; 
+  }
+  
+  .main-content {
+    margin: auto;
+    padding: 20px;
+    height: 100vh;
+    background-color: #fff;
+  }
+  
