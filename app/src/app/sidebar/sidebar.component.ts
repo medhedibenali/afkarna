@@ -1,60 +1,35 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TreeNodeComponent } from '../tree-node/tree-node.component';
-
-
-interface TreeNode {
-  name: string;
-  type: 'file' | 'folder';
-  show?: boolean  
-  children?: TreeNode[]; 
-}
-
+import { Workspace } from '../workspace/model/workspace';
+import { WorkspaceService } from '../workspace/service/workspace.service';
+import { WorkspaceItem } from '../workspace/model/workspace-item';
+import { WorkspaceItemService } from '../workspace/service/workspace-item.service';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [CommonModule,TreeNodeComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  treeData: TreeNode[] = [
-    {
-      name: 'Documents',
-      type: 'folder',
-      show: false, 
-      children: [
-        { name: 'file1.txt', type: 'file' },
-        { name: 'file2.txt', type: 'file' },
-        {
-          name: 'Reports',
-          type: 'folder',
-          show: false,
-          children: [
-            { name: 'report1.pdf', type: 'file' },
-            { name: 'report2.pdf', type: 'file' },
-            {
-              name: 'Reports',
-              type: 'folder',
-              show: false,
-              children: [
-                { name: 'report1.pdf', type: 'file' },
-                { name: 'report2.pdf', type: 'file' },
-              ],
-            }
-          ],
-        },
-      ],
-    },
-    {
-      name: 'Pictures',
-      type: 'folder',
-      show: false,
-      children: [
-        { name: 'image1.jpg', type: 'file' },
-        { name: 'image2.png', type: 'file' },
-      ],
-    },
-  ];
+  
+  workspace!: Workspace;
+  @Input() workspaceId!: string;
+  treeData!: WorkspaceItem[];
+
+  constructor(private workspaceService: WorkspaceService,private workspaceItemService: WorkspaceItemService){}
+
+  ngOnInit() {
+    this.workspaceService.getWorkspaceById(this.workspaceId).subscribe(workspace => {
+      this.workspace = workspace;
+      const collectionId = workspace.collection.id;
+      this.workspaceItemService.getWorkspaceItemById(collectionId).subscribe((collection) => {
+        this.treeData = [collection];        
+      });
+    });
+  }
+
 
 }

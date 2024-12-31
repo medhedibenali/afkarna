@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-
-interface TreeNode {
-  name: string;
-  type: 'file' | 'folder';
-  show?: boolean;
-  children?: TreeNode[];
-}
+import { WorkspaceItem } from '../workspace/model/workspace-item';
+import { WorkspaceItemService } from '../workspace/service/workspace-item.service';
 
 
 @Component({
@@ -16,12 +11,17 @@ interface TreeNode {
   styleUrl: './tree-node.component.css'
 })
 export class TreeNodeComponent {
-  @Input() node!: TreeNode;
+  @Input() node!: WorkspaceItem;
+
+  constructor(private workspaceItemService: WorkspaceItemService) { }
 
   toggleFolder(): void {
-    if (this.node.type === 'folder') {
+    if (this.node.type === 'collection') {
       this.node.show = !this.node.show;
-    }
+      this.workspaceItemService.getWorkspaceItemsByParentId(this.node.id).subscribe((collection) => {
+        this.node.children = collection;
+      });
+    }    
   }
 
 }
