@@ -82,7 +82,7 @@ export class AuthService extends CrudService<Auth> {
     });
   }
 
-  async updateLogin(
+  async changePassword(
     id: string,
     changePasswordDto: ChangePasswordDto,
   ): Promise<AuthDto> {

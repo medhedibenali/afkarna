@@ -1,6 +1,6 @@
 import { AsyncValidatorFn } from "@angular/forms";
 import { catchError, map, of, switchMap, timer } from "rxjs";
-import { AuthService } from "../auth.service";
+import { AuthService } from "../services/auth.service";
 
 export function usernameExistsValidator(
   authService: AuthService,

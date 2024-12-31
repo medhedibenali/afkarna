@@ -83,7 +83,7 @@
       <button
         type="submit"
         class="sign-up-btn"
-        [disabled]="form.invalid"
+        [disabled]="!form.valid"
         (click)="signUp()"
       >
         Sign Up

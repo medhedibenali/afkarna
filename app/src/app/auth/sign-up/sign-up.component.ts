@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
@@ -6,10 +6,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { RouterModule } from "@angular/router";
-import { AuthService } from "../auth.service";
+import { Router, RouterModule } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 import { emailExistsValidator } from "../validators/email-exists.validators";
 import { usernameExistsValidator } from "../validators/username-exists.validators";
+import { SignUpDto } from "../dtos/sign-up.dto";
 
 @Component({
   selector: "app-sign-up",
@@ -18,30 +19,37 @@ import { usernameExistsValidator } from "../validators/username-exists.validator
   styleUrls: ["./sign-up.component.css"],
 })
 export class SignUpComponent {
-  form: FormGroup;
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-  ) {
-    this.form = this.formBuilder.group({
-      name: ["", Validators.required],
-      email: ["", [
-        Validators.required,
-        Validators.email,
-      ], [
-        emailExistsValidator(this.authService),
-      ]],
-      username: ["", [
-        Validators.required,
-        Validators.minLength(3),
-      ], [
-        usernameExistsValidator(this.authService),
-      ]],
-      password: ["", [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!$#]).{8,}$/),
-      ]],
+  form = this.formBuilder.group({
+    name: ["", Validators.required],
+    email: ["", [
+      Validators.required,
+      Validators.email,
+    ], [
+      emailExistsValidator(this.authService),
+    ]],
+    username: ["", [
+      Validators.required,
+      Validators.minLength(3),
+    ], [
+      usernameExistsValidator(this.authService),
+    ]],
+    password: ["", [
+      Validators.required,
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!$#]).{8,}$/),
+    ]],
+  });
+
+  signUp() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    this.authService.signUp(this.form.value as SignUpDto).subscribe(() => {
+      this.router.navigate([""]);
     });
   }
 
@@ -60,8 +68,6 @@ export class SignUpComponent {
   get password(): AbstractControl {
     return this.form.get("password")!;
   }
-
-  signUp() {}
 
   getErrorMessage(control: AbstractControl): string {
     if (control.hasError("required")) {

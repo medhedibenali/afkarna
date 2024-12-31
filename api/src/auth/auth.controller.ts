@@ -48,11 +48,11 @@ export class AuthController {
   }
 
   @Post("change-password")
-  updateLogin(
+  changePassword(
     @Body() changePasswordDto: ChangePasswordDto,
     @User() { id }: UserEntity,
   ): Promise<AuthDto> {
-    return this.authService.updateLogin(id, changePasswordDto);
+    return this.authService.changePassword(id, changePasswordDto);
   }
 
   @Get("email-exists")
