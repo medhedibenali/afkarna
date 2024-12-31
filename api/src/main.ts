@@ -4,7 +4,9 @@ import { WsIoAdapter } from "./ws/ws-io-adapter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useWebSocketAdapter(new WsIoAdapter(app));
+  app.enableCors();
 
   await app.listen(3000);
 }
