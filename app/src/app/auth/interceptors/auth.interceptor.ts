@@ -10,7 +10,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const newReq = req.clone({
-    headers: req.headers.set("Authorization", authService.accessToken()!),
+    headers: req.headers.set(
+      "Authorization",
+      `Bearer ${authService.accessToken()!}`,
+    ),
   });
 
   return next(newReq);

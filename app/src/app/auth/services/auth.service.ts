@@ -137,7 +137,7 @@ export class AuthService {
       );
   }
 
-  nonce() {
+  nonce(): Observable<string | undefined> {
     if (!this.isAuthenticated()) {
       return of(undefined);
     }

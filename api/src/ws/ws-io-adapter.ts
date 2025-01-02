@@ -15,7 +15,7 @@ export class WsIoAdapter extends IoAdapter {
     const server: Server = super.createIOServer(port, options);
 
     server.use(async (socket, next) => {
-      const token = socket.handshake.auth.token;
+      const token: string | undefined = socket.handshake.auth.token;
       socket.data.user = await this.authService.verifyNonce(token);
 
       next();
