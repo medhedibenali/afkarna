@@ -1,12 +1,12 @@
 <div class="app-layout">
     <!-- Sidebar Component -->
-    <app-sidebar [workspaceId]="'2a023b90-56cc-4850-94e9-a65062a502f0'"></app-sidebar>
+    <app-sidebar [workspaceId]="'ef4fc105-2f7a-4a6b-bd8e-c5e7fd7897ee'"></app-sidebar>
   
     <div class="main-content">
       <p *ngIf="!selectedNodeSignal()">Your dynamic content goes here. This can be your main page content.</p>
       <div *ngIf="selectedNodeSignal()">
-        <h2>{{ selectedNodeSignal().name }}</h2>
-        <p>{{ selectedNodeSignal().content }}</p> 
+        <h2>{{ selectedNodeSignal()?.name }}</h2>
+        <p>{{ selectedNodeSignal()?.content }}</p> 
       </div>
     </div>
 </div>

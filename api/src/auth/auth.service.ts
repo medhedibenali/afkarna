@@ -203,7 +203,7 @@ export class AuthService extends CrudService<Auth> {
           type: TokenType.Access,
         },
         {
-          expiresIn: "1h",
+          expiresIn: "1d",
         },
       ),
     };

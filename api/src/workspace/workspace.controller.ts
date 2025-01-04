@@ -23,7 +23,9 @@ export class WorkspaceController {
 
   @Get()
   findAll(@Body() searchDto: SearchDto) {
-    return this.workspaceService.findAll(searchDto);
+    return this.workspaceService.findAll(searchDto, undefined, {
+      collection: true,
+    });
   }
 
   @Get(':id')

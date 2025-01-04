@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { WorkspaceItem } from '../model/workspace-item';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../../../config/api.config';
 
@@ -12,6 +12,9 @@ export class WorkspaceItemService {
 
   selectedNodeSignal = signal<WorkspaceItem | null>(null);
 
+  private newItemSubject$ = new Subject<any>();
+  newItem$ = this.newItemSubject$.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
@@ -22,5 +25,13 @@ export class WorkspaceItemService {
 
   getWorkspaceItemsByParentId(id: string): Observable<WorkspaceItem[]> {
     return this.http.get<WorkspaceItem[]>(`${API.workspceItem}/parent/${id}`);
+  }
+
+  createItem(itemData: any) {
+    return this.http.post<any>(API.workspceItem, itemData).pipe(
+      tap((newItem) => {
+        this.newItemSubject$.next(newItem);
+      })
+    );
   }
 }
