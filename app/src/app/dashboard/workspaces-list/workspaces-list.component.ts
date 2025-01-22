@@ -59,12 +59,10 @@ export class WorkspacesListComponent implements OnInit {
   ngOnInit() {
     this.loadWorkspaces();
 
-    this.workspaceService.newWorkspace$.subscribe((newWorkspace) => {
-      console.log('New workspace added:', newWorkspace);
+    this.workspaceService.newWorkspace$.subscribe(() => {
       this.loadWorkspaces();
     });
     this.workspaceItemService.newItem$.subscribe((newItem) => {
-      console.log('New item added:', newItem);
       this.loadCollectionContents(newItem.parent.id);
     });
   }
@@ -72,7 +70,6 @@ export class WorkspacesListComponent implements OnInit {
   @ViewChild(MatMenuTrigger)
   contextMenu!: MatMenuTrigger;
   onRightClick(event: MouseEvent, item: Workspace | WorkspaceItem) {
-    console.log('Right-clicked:', item);
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
@@ -82,12 +79,10 @@ export class WorkspacesListComponent implements OnInit {
   }
 
   openInEditor(item: Workspace | WorkspaceItem) {
-    console.log('Opening in editor:', item);
     // Implement logic to open the item in an editor
   }
 
   edit(item: Workspace | WorkspaceItem) {
-    console.log('Editing item:', item);
     // Implement logic to edit the item
   }
 
@@ -101,9 +96,20 @@ export class WorkspacesListComponent implements OnInit {
     });
   }
 
-  deleteItem(item: Workspace | WorkspaceItem) {
-    console.log('Deleting item:', item);
-    // Implement logic to delete the item
+  deleteItem(item: WorkspaceItem) {
+    this.workspaceItemService.deleteItem(item.id).subscribe(() => {
+      this.currentItems.update((stack) =>
+        stack.filter((stackItem) => stackItem.id !== item.id)
+      );
+      if (this.navigationStack().length > 0) {
+        this.loadCollectionContents(
+          this.navigationStack()[this.navigationStack().length - 1].id
+        );
+      } else {
+        this.loadWorkspaces();
+      }
+      this.saveState();
+    });
   }
 
   private loadWorkspaces() {
@@ -111,7 +117,6 @@ export class WorkspacesListComponent implements OnInit {
     if (!savedState || JSON.parse(savedState).navigationStack.length == 0) {
       this.workspaceService.getWorkspaces().subscribe((response) => {
         this.workspaces.set(response.data);
-        console.log('Workspaces:', response.data);
         const rootCollections = response.data.map(
           (workspace) => workspace.collection
         );
@@ -119,7 +124,6 @@ export class WorkspacesListComponent implements OnInit {
         this.navigationStack.set([]);
       });
     } else {
-      console.log('Restoring state:', savedState);
       this.restoreState(savedState);
     }
   }
@@ -161,7 +165,6 @@ export class WorkspacesListComponent implements OnInit {
       item.show = !item.show;
       this.saveState();
     } else if (item.type.toLowerCase() === 'note') {
-      console.log('Note clicked:', item);
     }
   }
 
@@ -175,34 +178,25 @@ export class WorkspacesListComponent implements OnInit {
   }
 
   navigateUp() {
-    console.log(this.navigationStack().length);
-
     if (this.navigationStack().length > 0) {
-      console.log('Navigating up1');
       const newStack = [...this.navigationStack()];
       newStack.pop();
       this.navigationStack.set(newStack);
 
-      this.saveState();
-
       if (newStack.length === 0) {
-        console.log('Navigating up12');
-        console.log('Workspaces:', this.workspaces());
         if (this.workspaces().length > 0) {
           const rootCollections = this.workspaces().map(
             (workspace) => workspace.collection
           );
-          console.log('Root collections:', rootCollections);
           this.currentItems.set(rootCollections);
         } else {
           this.loadWorkspaces();
         }
       } else {
-        console.log('Navigating up2');
         const lastItem = newStack[newStack.length - 1];
-        console.log('last', lastItem);
         this.loadCollectionContents(lastItem.id);
       }
     }
+    this.saveState();
   }
 }

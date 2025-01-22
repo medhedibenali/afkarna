@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WorkspaceItem } from './entities/workspace-item.entity';
@@ -21,21 +21,24 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
       if (!parent) {
         throw new NotFoundException('Parent not found');
       }
-      return super.create({...createWorkspaceItemDto, parent});
+      return super.create({ ...createWorkspaceItemDto, parent });
     }
 
     return super.create(createWorkspaceItemDto);
   }
 
-  async update(id: string,updateWorkspaceItemDto:UpdateWorkspaceItemDto): Promise<WorkspaceItem> {
-      if (updateWorkspaceItemDto.parentId) {
-        const parent = await super.findOne(updateWorkspaceItemDto.parentId);
-        if (!parent) {
-          throw new NotFoundException('Parent not found');
-        }
-        return super.update(id, {...updateWorkspaceItemDto, parent});
+  async update(
+    id: string,
+    updateWorkspaceItemDto: UpdateWorkspaceItemDto,
+  ): Promise<WorkspaceItem> {
+    if (updateWorkspaceItemDto.parentId) {
+      const parent = await super.findOne(updateWorkspaceItemDto.parentId);
+      if (!parent) {
+        throw new NotFoundException('Parent not found');
       }
-      return super.update(id, updateWorkspaceItemDto);
+      return super.update(id, { ...updateWorkspaceItemDto, parent });
+    }
+    return super.update(id, updateWorkspaceItemDto);
   }
 
   async findAllByParentId(parentId: string) {
@@ -44,4 +47,16 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
     });
   }
 
+  async remove(id: string) {
+    const workspaceItem = await super.findOne(id);
+    if (workspaceItem.type == 'note') {
+      return super.remove(id);
+    } else {
+      const children = await this.findAllByParentId(id);
+      for (const child of children) {
+        await this.remove(child.id);
+      }
+      return super.remove(id);
+    }
+  }
 }

@@ -47,12 +47,10 @@ export class CustomSidenavComponent {
 
   openAddWorkspaceDialog() {
     const state = sessionStorage.getItem('workspacesState');
-    console.log('State:', state);
     if (state) {
       const { currentItems, navigationStack } = JSON.parse(state);
       this.navigationStack = navigationStack;
     }
-    console.log('Navigation stack:', this.navigationStack);
     const dialogRef = this.dialog.open(AddWorkspaceDialogComponent, {
       data: {
         parentId:
@@ -64,7 +62,6 @@ export class CustomSidenavComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Workspace added successfully');
       }
     });
   }

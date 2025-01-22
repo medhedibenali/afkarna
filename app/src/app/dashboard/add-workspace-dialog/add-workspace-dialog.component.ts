@@ -45,7 +45,6 @@ export class AddWorkspaceDialogComponent {
       type: ['collection', Validators.required],
     });
     this.parentId = data.parentId;
-    console.log('Parent ID:', this.parentId);
   }
  
 
@@ -58,8 +57,6 @@ export class AddWorkspaceDialogComponent {
           type: this.workspaceItemForm.value.type,
           parentId: this.parentId,
         };
-
-        console.log('New workspace item:', newWorkspaceItem);
 
         this.workspaceItemService.createItem(newWorkspaceItem).subscribe(() => {
           this.workspaceItemAdded.emit();

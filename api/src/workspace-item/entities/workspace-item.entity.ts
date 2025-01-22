@@ -24,7 +24,7 @@ export class WorkspaceItem {
   @Column({ name: 'content', nullable: true })
   content: string;
 
-  @ManyToOne(() => WorkspaceItem,(workspaceItem) => workspaceItem.children, {
+  @ManyToOne(() => WorkspaceItem, (workspaceItem) => workspaceItem.children, {
     nullable: true,
     onDelete: 'CASCADE',
   })
@@ -35,13 +35,13 @@ export class WorkspaceItem {
 
   @OneToOne(() => Workspace, (workspace) => workspace.collection, {
     nullable: true,
+    cascade: true,
+    onDelete: 'CASCADE',
   })
   workspace: Workspace;
 
   @CreateDateColumn()
   createdAt: Date;
-
-
 
   toJSON() {
     return instanceToPlain(this);

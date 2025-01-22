@@ -18,10 +18,10 @@ export class ConfirmDeleteDialogComponent {
   ) {}
 
   onCancel(): void {
-    this.dialogRef.close(); // Close the dialog without action
+    this.dialogRef.close();
   }
 
   onConfirm(): void {
-    this.dialogRef.close(true); // Close the dialog and return true
+    this.dialogRef.close(true);
   }
 }

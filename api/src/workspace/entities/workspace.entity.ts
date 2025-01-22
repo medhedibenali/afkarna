@@ -20,7 +20,9 @@ export class Workspace {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToOne(() => WorkspaceItem, (item) => item.workspace)
+  @OneToOne(() => WorkspaceItem, (item) => item.workspace, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'root_collection_id' })
   collection: WorkspaceItem;
 
