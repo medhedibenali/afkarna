@@ -1,6 +1,12 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignUpComponent } from "./auth/sign-up/sign-up.component";
+import { LandingpageComponent } from "./home/landingpage/landingpage.component";
+import { NavbarComponent } from "./home/navbar/navbar.component";
+import { FirstPageComponent } from "./home/first-page/first-page.component";
+import { FeaturesPageComponent } from "./home/features-page/features-page.component";
+import { UrfeaturesPageComponent } from "./urfeatures-page/urfeatures-page.component";
+import { ContactPageComponent } from "./home/contact-page/contact-page.component";
 
 export const routes: Routes = [
     {
@@ -14,5 +20,17 @@ export const routes: Routes = [
             { path: "login", component: LoginComponent },
             { path: "sign-up", component: SignUpComponent },
         ],
+    },
+    {path:"nav",component:NavbarComponent},
+
+    {path:"first",component:FirstPageComponent},
+
+    {path:"features",component:FeaturesPageComponent},
+    {path:"other",component:UrfeaturesPageComponent},
+    {path:"contact",component:ContactPageComponent},
+
+
+    {
+        path: "", component: LandingpageComponent
     },
 ];
