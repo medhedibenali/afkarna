@@ -13,6 +13,7 @@
     position: relative;
     flex: 1;
     flex-grow: 1;
+    
   }
   .frame-4 {
     display: inline-flex;
@@ -29,7 +30,6 @@
     flex-grow: 1;
     align-items: center;
     position: relative;
-   
   }
   
   .frame-6 {
@@ -64,11 +64,11 @@
     cursor: pointer;
   }
   .button6:hover {
-    background-color: #FF7855;
+    background-color: #cb9b8f;
     color: white;
   }
   .button7:hover {
-    background-color: lightgrey;
+    background-color: rgb(103, 155, 238);
     color:#FF7801;
   }
   .frame-wrapper {

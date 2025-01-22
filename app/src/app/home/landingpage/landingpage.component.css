@@ -28,13 +28,15 @@ a {
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  margin: auto;
+  text-align: center;
 }
 
 .home .div {
   background-color: #ffffff;
   overflow: hidden;
   width: 100%;
-  height: 4750px;
+  height: 4650px;
   position: relative;
 
 }
@@ -494,7 +496,7 @@ a {
   line-height: 28px;
 }
 
-.home .frame-22 {
+.frame-22 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -507,6 +509,8 @@ a {
   border: 1.5px solid;
   border-color: #4d2114;
   box-shadow: var(--bt);
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
 .home .text-wrapper-12 {
@@ -524,6 +528,7 @@ a {
 
 .home .frame-23 {
   display: flex;
+  top:50px;
   flex-direction: column;
   width: 1000px;
   align-items: center;
@@ -776,27 +781,31 @@ a {
   background-size: cover;
   background-position: 50% 50%;
 }
+.button6:hover {
+  background-color: #cb9b8f;
+  color: white;
+}
 
-.home .arrow {
+.arrow {
+  position: absolute;
+  width: 247px;
+  height: 251px;
+  top: 490px;
+  left: 508px;
+}
+
+.home .arrow-2 {
+  
+
   position: absolute;
   width: 221px;
   height: 203px;
   top: 1276px;
   left: 607px;
-  transform: rotate(90deg);
-}
-
-.home .arrow-2 {
-  position: absolute;
-  width: 247px;
-  height: 251px;
-  top: 440px;
-  left: 508px;
-  transform: rotate(90deg);
 
 }
 
-.home .frame-32 {
+ .frame-32 {
   display: flex;
   flex-direction: column;
   width: 726px;
@@ -807,7 +816,7 @@ a {
   left: 400px;
 }
 
-.home .frame-33 {
+.frame-33 {
   display: flex;
   flex-direction: column;
   align-items: center;
