@@ -182,13 +182,14 @@ export class WorkspacesListComponent implements OnInit {
       const newStack = [...this.navigationStack()];
       newStack.pop();
       this.navigationStack.set(newStack);
-
+      this.saveState();
       if (newStack.length === 0) {
         if (this.workspaces().length > 0) {
           const rootCollections = this.workspaces().map(
             (workspace) => workspace.collection
           );
           this.currentItems.set(rootCollections);
+          this.saveState();
         } else {
           this.loadWorkspaces();
         }
@@ -197,6 +198,5 @@ export class WorkspacesListComponent implements OnInit {
         this.loadCollectionContents(lastItem.id);
       }
     }
-    this.saveState();
   }
 }
