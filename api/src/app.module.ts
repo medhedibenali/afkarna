@@ -6,7 +6,9 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
-import { WsModule } from "./ws/ws.module";
+import { WsModule } from './ws/ws.module';
+import { WorkspaceItemModule } from './workspace-item/workspace-item.module';
+import { WorkspaceModule } from './workspace/workspace.module';
 import { ProfileModule } from "./profile/profile.module";
 
 @Module({
@@ -26,6 +28,8 @@ import { ProfileModule } from "./profile/profile.module";
     UsersModule,
     AuthModule,
     WsModule,
+    WorkspaceItemModule,
+    WorkspaceModule,
     ProfileModule,
   ],
   controllers: [AppController],

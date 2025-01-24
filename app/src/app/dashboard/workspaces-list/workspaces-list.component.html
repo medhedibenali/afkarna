@@ -1,0 +1,78 @@
+<mat-toolbar>
+  @if (navigationStack().length > 0) {
+    <button mat-icon-button (click)="navigateUp()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  }
+  <span>{{ currentPath() }}</span>
+</mat-toolbar>
+
+<div class="file-container">
+  <mat-grid-list [cols]="4" rowHeight="200px" gutterSize="16px">
+    @if (currentItems().length === 0) {
+      <div class="empty-state">
+        <mat-icon>folder_open</mat-icon>
+        <div>No files or folders found</div>
+      </div>
+    }
+    @for (item of currentItems(); track item.id) {
+      <mat-grid-tile>
+        <div
+          (contextmenu)="onRightClick($event, item)"
+          style="cursor: context-menu; width: 100%; height: 100%"
+        >
+          <mat-card class="file-card" (click)="handleItemClick(item)">
+            <mat-card-content>
+              <div class="card-content">
+                <mat-icon [class]="item.type.toLowerCase()">
+                  {{ getItemIcon(item) }}
+                </mat-icon>
+                <div matCardTitle class="item-name">{{ item.name }}</div>
+                <div class="item-date">
+                  {{ item.createdAt | date:"short" }}
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <mat-menu #contextMenu="matMenu">
+          <ng-template matMenuContent let-item="item">
+            <button mat-menu-item (click)="openInEditor(item)">
+              <mat-icon class="small-icon">open_in_new</mat-icon>Open in editor
+            </button>
+            <button mat-menu-item (click)="edit(item)">
+              <mat-icon class="small-icon">edit</mat-icon>edit
+            </button>
+            <mat-divider style="border-top-color: none"></mat-divider>
+            <button
+              mat-menu-item
+              (click)="confirmDelete(item)"
+              class="delete-button"
+            >
+              <mat-icon class="small-icon">delete</mat-icon> Delete
+            </button>
+          </ng-template>
+        </mat-menu>
+
+        <ng-template #confirmDialog let-dialogRef>
+          <h2 mat-dialog-title>Confirm Deletion</h2>
+          <mat-dialog-content>Are you sure you want to delete this
+            item?</mat-dialog-content>
+          <mat-dialog-actions>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+            <button mat-button color="warn" (click)="deleteItem(item); dialogRef.close()">
+              Delete
+            </button>
+          </mat-dialog-actions>
+        </ng-template>
+
+        <div
+          style="visibility: hidden; position: fixed"
+          [style.left]="contextMenuPosition.x"
+          [style.top]="contextMenuPosition.y"
+          [matMenuTriggerFor]="contextMenu"
+        >
+        </div>
+      </mat-grid-tile>
+    }</mat-grid-list>
+</div>
