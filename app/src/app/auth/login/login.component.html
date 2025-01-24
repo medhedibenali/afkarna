@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="login-box">
+    <h1 class="titan-one-regular logo">Afkarna<span class="icon">✏️</span></h1>
+    <h2 class="titan-one-regular login-title">Log in</h2>
+    <p class="signup-text">
+      Don't have an account?
+      <span
+        [routerLink]='["/auth/sign-up"]'
+        routerLinkActive="active"
+        class="link"
+      >
+        Sign up
+      </span>
+    </p>
+    <form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+      <div class="input-group">
+        <label for="email">Your email</label>
+        <input
+          email
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          ngModel
+          required
+          placeholder="Enter your email"
+          #emailInput="ngModel"
+        />
+      </div>
+      <div class="input-group password-group">
+        <label for="password">Your password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          ngModel
+          required
+          minlength="8"
+          placeholder="Enter your password"
+          #passwordInput="ngModel"
+        />
+      </div>
+      <span
+        [routerLink]='[""]'
+        routerLinkActive="active"
+        class="forgot-password"
+      >Forgot your password?</span>
+      <button type="submit" class="login-btn" [disabled]="!loginForm.valid">
+        Log in
+      </button>
+    </form>
+    <div class="illustration">
+      <img src="login.png" alt="Login Illustration" />
+    </div>
+  </div>
+</div>

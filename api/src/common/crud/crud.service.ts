@@ -1,14 +1,14 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException } from "@nestjs/common";
 import {
   DeepPartial,
   DeleteResult,
   FindOptionsRelations,
   FindOptionsWhere,
   Repository,
-} from 'typeorm';
-import { EntityDto } from '../dto/entity.dto';
-import { SearchDto } from '../dto/search.dto';
-import { Pagination } from '../dto/pagination.dto';
+} from "typeorm";
+import { EntityDto } from "../dto/entity.dto";
+import { SearchDto } from "../dto/search.dto";
+import { Pagination } from "../dto/pagination.dto";
 
 export abstract class CrudService<Entity extends EntityDto> {
   constructor(protected readonly repository: Repository<Entity>) {}

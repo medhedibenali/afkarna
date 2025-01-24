@@ -82,7 +82,7 @@ export class AuthService extends CrudService<Auth> {
     });
   }
 
-  async updateLogin(
+  async changePassword(
     id: string,
     changePasswordDto: ChangePasswordDto,
   ): Promise<AuthDto> {
@@ -153,12 +153,9 @@ export class AuthService extends CrudService<Auth> {
     }
 
     try {
-      this.jwtService.verify(
-        nonce,
-        {
-          ignoreExpiration: false,
-        },
-      );
+      this.jwtService.verify(nonce, {
+        ignoreExpiration: false,
+      });
     } catch (_error) {
       await this.repository.delete({ token: nonce, type: TokenType.Nonce });
       return null;
@@ -217,11 +214,16 @@ export class AuthService extends CrudService<Auth> {
       type: TokenType.Nonce,
     };
 
-    return this.jwtService.sign(
-      payload,
-      {
-        expiresIn: "5m",
-      },
-    );
+    return this.jwtService.sign(payload, {
+      expiresIn: "5m",
+    });
+  }
+
+  async emailExists(email: string): Promise<boolean> {
+    return !!(await this.usersService.findOneByEmail(email));
+  }
+
+  async usernameExists(username: string): Promise<boolean> {
+    return !!(await this.usersService.findOneByUserName(username));
   }
 }

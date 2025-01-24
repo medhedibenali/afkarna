@@ -1,10 +1,10 @@
-import { Body, Controller, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { RegisterUserDto } from "./dto/register-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { Public } from "./decorators/public.decorator";
 import { ChangePasswordDto } from "./dto/change-password.dto";
-import { User } from "./user.decorator";
+import { User } from "./decorators/user.decorator";
 import { User as UserEntity } from "../users/entities/user.entity";
 import { AuthDto } from "./dto/auth.dto";
 import { RefreshDto } from "./dto/refresh.dto";
@@ -48,10 +48,22 @@ export class AuthController {
   }
 
   @Post("change-password")
-  updateLogin(
+  changePassword(
     @Body() changePasswordDto: ChangePasswordDto,
     @User() { id }: UserEntity,
   ): Promise<AuthDto> {
-    return this.authService.updateLogin(id, changePasswordDto);
+    return this.authService.changePassword(id, changePasswordDto);
+  }
+
+  @Get("email-exists")
+  @Public()
+  emailExists(@Query("email") email: string): Promise<boolean> {
+    return this.authService.emailExists(email);
+  }
+
+  @Get("username-exists")
+  @Public()
+  usernameExists(@Query("username") username: string): Promise<boolean> {
+    return this.authService.usernameExists(username);
   }
 }

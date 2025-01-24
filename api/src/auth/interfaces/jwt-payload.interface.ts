@@ -1,4 +1,4 @@
-import { TokenType } from '../enum/token-type.enum';
+import { TokenType } from "../enum/token-type.enum";
 
 export interface JwtPayload {
   sub: string;
