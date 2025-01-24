@@ -2,7 +2,6 @@
   transition: all 500ms ease-in-out;
 }
 
-
 .sidenav-header {
   display: flex;
   justify-content: center;
@@ -45,7 +44,6 @@
 }
 
 .mat-mdc-nav-list .mat-mdc-list-item.mdc-list-item--activated {
-
   span,
   mat-icon {
     color: rgb(58, 83, 213);

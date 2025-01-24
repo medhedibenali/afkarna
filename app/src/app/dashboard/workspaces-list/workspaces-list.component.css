@@ -39,11 +39,11 @@ mat-icon {
 }
 
 mat-icon.collection {
-  color: #FF7801;
+  color: #ff7801;
 }
 
 mat-icon.note {
-  color: #3A53D5;
+  color: #3a53d5;
 }
 
 button {
@@ -92,4 +92,5 @@ button mat-icon.small-icon {
 }
 
 mat-divider.mat-divider {
-  border: 1px solid rgba(0, 0, 0, 0.1);}
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}

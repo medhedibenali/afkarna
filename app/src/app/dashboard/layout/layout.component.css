@@ -6,7 +6,6 @@ mat-toolbar {
   align-items: center;
   position: relative;
   z-index: 5;
-
 }
 
 .logo {
@@ -26,7 +25,6 @@ mat-sidenav-container {
 mat-sidenav {
   background-color: #f5f5f7;
 }
-
 
 mat-sidenav, mat-sidenav-content {
   transition: all 500ms ease-in-out;

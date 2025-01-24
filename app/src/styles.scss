@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $theme: mat.define-theme(
   (
@@ -14,7 +14,7 @@ body {
   @include mat.all-component-themes($theme);
 
   & {
-    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -26,9 +26,9 @@ html {
 }
 
 .titan-one-regular {
-    font-family: "Titan One", serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Titan One", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 @include mat.core();

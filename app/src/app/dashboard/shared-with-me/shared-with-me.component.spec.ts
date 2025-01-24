@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SharedWithMeComponent } from './shared-with-me.component';
+import { SharedWithMeComponent } from "./shared-with-me.component";
 
-describe('SharedWithMeComponent', () => {
+describe("SharedWithMeComponent", () => {
   let component: SharedWithMeComponent;
   let fixture: ComponentFixture<SharedWithMeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedWithMeComponent]
+      imports: [SharedWithMeComponent],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SharedWithMeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

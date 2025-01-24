@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { WorkspaceItemService } from './workspace-item.service';
+import { WorkspaceItemService } from "./workspace-item.service";
 
-describe('WorkspaceItemService', () => {
+describe("WorkspaceItemService", () => {
   let service: WorkspaceItemService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('WorkspaceItemService', () => {
     service = TestBed.inject(WorkspaceItemService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

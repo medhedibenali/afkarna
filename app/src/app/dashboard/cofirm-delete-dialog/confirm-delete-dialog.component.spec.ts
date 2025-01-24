@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
+import { ConfirmDeleteDialogComponent } from "./confirm-delete-dialog.component";
 
-describe('CofirmDeleteDialogComponent', () => {
+describe("CofirmDeleteDialogComponent", () => {
   let component: ConfirmDeleteDialogComponent;
   let fixture: ComponentFixture<ConfirmDeleteDialogComponent>;
 
@@ -16,7 +16,7 @@ describe('CofirmDeleteDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

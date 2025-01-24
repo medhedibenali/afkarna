@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { WorkspacesListComponent } from './workspaces-list.component';
+import { WorkspacesListComponent } from "./workspaces-list.component";
 
-describe('WorkspacesListComponent', () => {
+describe("WorkspacesListComponent", () => {
   let component: WorkspacesListComponent;
   let fixture: ComponentFixture<WorkspacesListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WorkspacesListComponent]
+      imports: [WorkspacesListComponent],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(WorkspacesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

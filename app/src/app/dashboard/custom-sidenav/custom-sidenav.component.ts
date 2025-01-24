@@ -1,9 +1,9 @@
-import { Component, Input, signal } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { Router, RouterModule, IsActiveMatchOptions } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { AddWorkspaceDialogComponent } from '../add-workspace-dialog/add-workspace-dialog.component';
+import { Component, Input, signal } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { IsActiveMatchOptions, Router, RouterModule } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { AddWorkspaceDialogComponent } from "../add-workspace-dialog/add-workspace-dialog.component";
 
 export type MenuItem = {
   icon: string;
@@ -12,31 +12,32 @@ export type MenuItem = {
 };
 
 @Component({
-  selector: 'app-custom-sidenav',
+  selector: "app-custom-sidenav",
   imports: [MatIconModule, MatListModule, RouterModule],
-  templateUrl: './custom-sidenav.component.html',
-  styleUrls: ['./custom-sidenav.component.css'],
+  templateUrl: "./custom-sidenav.component.html",
+  styleUrls: ["./custom-sidenav.component.css"],
   standalone: true,
 })
 export class CustomSidenavComponent {
   sideNavCollapsed = signal<boolean>(false);
   private navigationStack: any;
 
-  @Input() set collapsed(value: boolean) {
+  @Input()
+  set collapsed(value: boolean) {
     this.sideNavCollapsed.set(value);
   }
 
   menuItems = signal<MenuItem[]>([
-    { icon: 'workspaces', name: 'Workspaces', route: '/dashboard/workspaces' },
+    { icon: "workspaces", name: "Workspaces", route: "/dashboard/workspaces" },
     {
-      icon: 'people',
-      name: 'Shared with me',
-      route: '/dashboard/shared_with_me',
+      icon: "people",
+      name: "Shared with me",
+      route: "/dashboard/shared_with_me",
     },
   ]);
 
   constructor(private dialog: MatDialog, private router: Router) {
-    const state = sessionStorage.getItem('workspacesState');
+    const state = sessionStorage.getItem("workspacesState");
     if (state) {
       const { currentItems, navigationStack } = JSON.parse(state);
       if (navigationStack.length > 0) {
@@ -46,17 +47,16 @@ export class CustomSidenavComponent {
   }
 
   openAddWorkspaceDialog() {
-    const state = sessionStorage.getItem('workspacesState');
+    const state = sessionStorage.getItem("workspacesState");
     if (state) {
       const { currentItems, navigationStack } = JSON.parse(state);
       this.navigationStack = navigationStack;
     }
     const dialogRef = this.dialog.open(AddWorkspaceDialogComponent, {
       data: {
-        parentId:
-          this.navigationStack && this.navigationStack.length > 0
-            ? this.navigationStack[this.navigationStack.length - 1].id
-            : null,
+        parentId: this.navigationStack && this.navigationStack.length > 0
+          ? this.navigationStack[this.navigationStack.length - 1].id
+          : null,
       },
     });
 
@@ -68,11 +68,11 @@ export class CustomSidenavComponent {
 
   get isWorkspacesActive(): boolean {
     const options: IsActiveMatchOptions = {
-      paths: 'exact',
-      queryParams: 'ignored',
-      fragment: 'ignored',
-      matrixParams: 'ignored',
+      paths: "exact",
+      queryParams: "ignored",
+      fragment: "ignored",
+      matrixParams: "ignored",
     };
-    return this.router.isActive('/dashboard/workspaces', options);
+    return this.router.isActive("/dashboard/workspaces", options);
   }
 }

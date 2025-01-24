@@ -9,23 +9,21 @@
   </button>
 </div>
 <mat-nav-list>
-  @for (item of menuItems(); track $index ) {
-  <a
-    mat-list-item
-    class="sidenav-item"
-    [routerLink]="item.route"
-    routerLinkActive="selected-menu-item"
-    #rla="routerLinkActive"
-    [activated]="rla.isActive"
-  >
-    <mat-icon
-      [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
-      matListItemIcon
-      >{{ item.icon }}</mat-icon
+  @for (item of menuItems(); track $index) {
+    <a
+      mat-list-item
+      class="sidenav-item"
+      [routerLink]="item.route"
+      routerLinkActive="selected-menu-item"
+      #rla="routerLinkActive"
+      [activated]="rla.isActive"
     >
-    @if (!sideNavCollapsed()) {
-    <span matListItemTitle>{{ item.name }}</span>
-    }
-  </a>
-  }
-</mat-nav-list>
+      <mat-icon
+        [fontSet]='rla.isActive ? "material-icons" : "material-icons-outlined"'
+        matListItemIcon
+      >{{ item.icon }}</mat-icon>
+      @if (!sideNavCollapsed()) {
+        <span matListItemTitle>{{ item.name }}</span>
+      }
+    </a>
+  }</mat-nav-list>

@@ -1,15 +1,19 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WorkspaceService } from '../../workspace/service/workspace.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { WorkspaceItemService } from '../../workspace/service/workspace-item.service';
-import { MatSelectModule } from '@angular/material/select';
+import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from "@angular/material/dialog";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { WorkspaceService } from "../../workspace/service/workspace.service";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { WorkspaceItemService } from "../../workspace/service/workspace-item.service";
+import { MatSelectModule } from "@angular/material/select";
 
 @Component({
-  selector: 'app-add-workspace-dialog',
+  selector: "app-add-workspace-dialog",
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -17,13 +21,15 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     MatSelectModule,
   ],
-  templateUrl: './add-workspace-dialog.component.html',
-  styleUrls: ['./add-workspace-dialog.component.css'],
+  templateUrl: "./add-workspace-dialog.component.html",
+  styleUrls: ["./add-workspace-dialog.component.css"],
   standalone: true,
 })
 export class AddWorkspaceDialogComponent {
-  @Output() workspaceAdded = new EventEmitter<void>();
-  @Output() workspaceItemAdded = new EventEmitter<void>();
+  @Output()
+  workspaceAdded = new EventEmitter<void>();
+  @Output()
+  workspaceItemAdded = new EventEmitter<void>();
   parentId?: string;
 
   workspaceForm: FormGroup;
@@ -34,22 +40,20 @@ export class AddWorkspaceDialogComponent {
     private fb: FormBuilder,
     private workspaceService: WorkspaceService,
     private workspaceItemService: WorkspaceItemService,
-    @Inject(MAT_DIALOG_DATA) public data: { parentId?: string }
+    @Inject(MAT_DIALOG_DATA) public data: { parentId?: string },
   ) {
     this.workspaceForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ["", Validators.required],
     });
 
     this.workspaceItemForm = this.fb.group({
-      name: ['', Validators.required],
-      type: ['collection', Validators.required],
+      name: ["", Validators.required],
+      type: ["collection", Validators.required],
     });
     this.parentId = data.parentId;
   }
- 
 
   onSubmit() {
-    
     if (this.parentId) {
       if (this.workspaceItemForm.valid) {
         const newWorkspaceItem = {
