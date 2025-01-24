@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignUpComponent } from "./auth/sign-up/sign-up.component";
-import { TestComponent } from "./test/test.component";
+import { EditorComponent } from "./editor/editor/editor.component";
 import { LayoutComponent } from "./dashboard/layout/layout.component";
 import { WorkspacesListComponent } from "./dashboard/workspaces-list/workspaces-list.component";
 import { SharedWithMeComponent } from "./dashboard/shared-with-me/shared-with-me.component";
@@ -21,8 +21,8 @@ export const routes: Routes = [
     ],
   },
   {
-    path: "editor",
-    component: TestComponent,
+    path: "editor/:workspace",
+    component: EditorComponent,
   },
   {
     path: "dashboard",
