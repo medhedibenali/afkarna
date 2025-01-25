@@ -9,5 +9,6 @@ import { WorkspaceItemModule } from 'src/workspace-item/workspace-item.module';
   imports: [TypeOrmModule.forFeature([Workspace]), WorkspaceItemModule],
   controllers: [WorkspaceController],
   providers: [WorkspaceService],
+  exports: [WorkspaceService],
 })
 export class WorkspaceModule {}
