@@ -20,14 +20,6 @@ export const routes: Routes = [
             { path: "sign-up", component: SignUpComponent },
         ],
     },
-    {path:"nav",component:NavbarComponent},
-
-    {path:"first",component:FirstPageComponent},
-
-    {path:"features",component:FeaturesPageComponent},
-    {path:"contact",component:ContactPageComponent},
-
-
     {
         path: "", component:HomepageComponent
     },
