@@ -8,6 +8,7 @@ import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
 import { WsModule } from "./ws/ws.module";
 import { ProfileModule } from "./profile/profile.module";
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -27,8 +28,10 @@ import { ProfileModule } from "./profile/profile.module";
     AuthModule,
     WsModule,
     ProfileModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+console.log(process.env.DB_USERNAME , process.env.DB_PASSWORD, process.env.DB_NAME, process.env.DB_PORT, process.env.DB_HOST);
