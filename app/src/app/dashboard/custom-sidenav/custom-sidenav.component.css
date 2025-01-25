@@ -1,0 +1,62 @@
+:host * {
+  transition: all 500ms ease-in-out;
+}
+
+.sidenav-header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 20%;
+}
+
+.add-button {
+  margin: auto;
+  color: rgb(58, 83, 213);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid rgba(58, 83, 213, 0.5);
+}
+
+.add-button:disabled {
+  background-color: rgba(58, 83, 213, 0.2);
+  color: rgba(58, 83, 213, 0.5);
+  border-color: rgba(58, 83, 213, 0.2);
+  cursor: not-allowed;
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 20%);
+}
+
+.sidenav-item {
+  padding: 25px 16px;
+  border-left: 5px solid;
+  border-left-color: rgb(0, 0, 0, 0);
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item.mdc-list-item--activated {
+  span,
+  mat-icon {
+    color: rgb(58, 83, 213);
+  }
+
+  background-color: rgb(0, 0, 0, 0.02);
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0;
+}
+
+.selected-menu-item {
+  border-left: 5px solid;
+  border-left-color: rgb(58, 83, 213);
+}

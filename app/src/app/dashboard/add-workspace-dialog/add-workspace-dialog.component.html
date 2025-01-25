@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>@if (parentId) { Add Item } @else { Add Workspace }</h2>
+
+@if (!parentId) {
+  <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Workspace Name</mat-label>
+        <input matInput formControlName="name" required />
+        @if (workspaceForm.get("name")?.hasError("required")) {
+          <mat-error> Name is required. </mat-error>
+        }
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">
+        Add Workspace
+      </button>
+    </mat-dialog-actions>
+  </form>
+} @else {
+  <form [formGroup]="workspaceItemForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Item Name</mat-label>
+        <input matInput formControlName="name" required />
+        @if (workspaceItemForm.get("name")?.hasError("required")) {
+          <mat-error> Name is required. </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option value="collection">Collection</mat-option>
+          <mat-option value="note">Note</mat-option>
+        </mat-select>
+        @if (workspaceItemForm.get("type")?.hasError("required")) {
+          <mat-error> Type is required. </mat-error>
+        }
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Add Item</button>
+    </mat-dialog-actions>
+  </form>
+}
