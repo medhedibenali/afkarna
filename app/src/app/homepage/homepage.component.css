@@ -267,7 +267,7 @@ a {
   width: 548.45px;
   height: 334.2px;
   margin-left: -6.1e-05px;
-  background-image: url(./../../../../public/login.png);
+  background-image: url(./../../../public/login.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -746,7 +746,7 @@ a {
   border-radius: 12px 12px 0px 0px;
   border: 1px solid;
   border-color: #3953d5;
-  background-image: url(./../../../../public/feature-doc-collaboration.webp.png);
+  background-image: url(./../../../public/feature-doc-collaboration.webp.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -777,7 +777,7 @@ a {
   width: 578.02px;
   height: 315.64px;
   margin-right: -85.02px;
-  background-image: url(./../../../../public/awraktayra.png);
+  background-image: url(./../../../public/awraktayra.png);
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -831,7 +831,7 @@ a {
   position: relative;
   width: 600px;
   height: 470px;
-  background-image: url(./../../../../public/coding.png);
+  background-image: url(./../../../public/coding.png);
 }
 
 .home .ready-to-take-your {

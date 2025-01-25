@@ -475,7 +475,7 @@
   color: #666;
 }
 
-.sign-up-btn {
+.submit-btn {
   width: 100%;
   padding: 10px;
   background-color: #7b7edb;
@@ -487,7 +487,7 @@
   margin-top: 10px;
 }
 
-.sign-up-btn:disabled {
+.submit-btn:disabled {
   background-color: #a8aedb;
   cursor: not-allowed;
 }
