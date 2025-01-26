@@ -16,14 +16,14 @@ import { CommentModule } from './comment/comment.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: "postgres",
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      autoLoadEntities: true,
-      synchronize: true,
+      type: 'postgres',
+      host: 'localhost',           // Adresse de l'hôte PostgreSQL
+      port: 5432,                  // Port de la base de données
+      username: 'postgres',        // Nom d'utilisateur PostgreSQL
+      password: 'postgres',        // Mot de passe PostgreSQL
+      database: 'afkarna_db',      // Nom de la base de données
+      autoLoadEntities: true,      // Charge automatiquement toutes les entités
+      synchronize: true,           // Synchronise la base de données
     }),
     CommonModule,
     UsersModule,

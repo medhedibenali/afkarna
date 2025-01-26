@@ -6,9 +6,9 @@ services:
     container_name: postgres_container
     restart: always
     environment:
-      POSTGRES_USER: your_username
-      POSTGRES_PASSWORD: your_password
-      POSTGRES_DB: your_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: afkarna_db
     ports:
       - '5432:5432'
     volumes:
