@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity('workspace')
 export class Workspace {
@@ -29,4 +31,6 @@ export class Workspace {
   toJSON() {
     return instanceToPlain(this);
   }
+  @OneToMany(() => Comment, comment => comment.workspace)
+  comments: Comment[];
 }
