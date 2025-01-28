@@ -1,3 +1,21 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+/* a blue color as a generic focus style */
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+a {
+  text-decoration: none;
+}
 .comment-card {
     display: flex;
     flex-direction: column;
@@ -63,3 +81,12 @@
   .reaction-btn:hover {
     text-decoration: underline;
   }
+  :root {
+    --base: rgba(255, 255, 255, 1);
+    --brand-primary: rgba(18, 19, 20, 1);
+    --content-secondary: rgba(151, 151, 159, 1);
+    --content-primary: rgba(105, 106, 108, 1);
+    --base-strong: rgba(246, 246, 246, 1);
+    --base-x-strong: rgba(218, 220, 224, 1);
+  }
+  

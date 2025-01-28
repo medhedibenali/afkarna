@@ -38,8 +38,8 @@ export class AddWorkspaceDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<AddWorkspaceDialogComponent>,
     private fb: FormBuilder,
-    private workspaceService: WorkspaceService,
-    private workspaceItemService: WorkspaceItemService,
+    @Inject(WorkspaceService) private workspaceService: WorkspaceService,
+    @Inject(WorkspaceItemService) private workspaceItemService: WorkspaceItemService,
     @Inject(MAT_DIALOG_DATA) public data: { parentId?: string },
   ) {
     this.workspaceForm = this.fb.group({

@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommentService } from './comment.service';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  imports:[CommonModule,BrowserModule],
+  imports:[CommonModule],
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent implements OnInit {
   comments: any[] = [];
 
-  constructor(private commentService: CommentService) {}
+  constructor(@Inject(CommentService) private readonly commentService: CommentService) {}
 
   ngOnInit(): void {
     // Fetch initial comments

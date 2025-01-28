@@ -8,6 +8,7 @@ import { SharedWithMeComponent } from "./dashboard/shared-with-me/shared-with-me
 import { CommentComponent } from "./comment/comment.component";
 
 export const routes: Routes = [
+   {path:"farah", component:CommentComponent},
   { path: "", redirectTo: "home", pathMatch: "full" },
   {
     path: "auth",
@@ -34,5 +35,4 @@ export const routes: Routes = [
       { path: "shared_with_me", component: SharedWithMeComponent },
     ],
   },
-  {path:"comment",component:CommentComponent},
 ];
