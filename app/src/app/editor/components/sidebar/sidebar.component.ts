@@ -24,7 +24,8 @@ export class SidebarComponent {
     private workspaceItemService: WorkspaceItemService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {    
+
     this.workspaceService.getWorkspaceById(this.workspaceId).subscribe(
       (workspace) => {
         this.workspace = workspace;

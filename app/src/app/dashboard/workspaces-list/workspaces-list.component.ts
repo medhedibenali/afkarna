@@ -80,7 +80,7 @@ export class WorkspacesListComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  openInEditor(item: WorkspaceItem) {
+  openInEditor(item: WorkspaceItem) {    
     if (item.workspace) {
       this.router.navigate(["/editor", item.workspace.id]);
     }else{
@@ -177,6 +177,7 @@ export class WorkspacesListComponent implements OnInit {
       this.saveState();
       if (item.workspace) {
         this.workspaceService.selectedWorkspace.set(item.workspace);
+        sessionStorage.setItem("selectedWorkspace", JSON.stringify(item.workspace));
       }
       
     } else if (item.type.toLowerCase() === "note") {
