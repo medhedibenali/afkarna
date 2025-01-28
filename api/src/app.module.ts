@@ -6,25 +6,24 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
-import { WsModule } from './ws/ws.module';
-import { WorkspaceItemModule } from './workspace-item/workspace-item.module';
-import { WorkspaceModule } from './workspace/workspace.module';
+import { WsModule } from "./ws/ws.module";
+import { WorkspaceItemModule } from "./workspace-item/workspace-item.module";
+import { WorkspaceModule } from "./workspace/workspace.module";
 import { ProfileModule } from "./profile/profile.module";
-import { CommentModule } from './comment/comment.module';
-import { ReplyModule } from './reply/reply.module';
+import { CommentsModule } from "./comments/comments.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',           // Adresse de l'hôte PostgreSQL
-      port: 5432,                  // Port de la base de données
-      username: 'postgres',        // Nom d'utilisateur PostgreSQL
-      password: 'postgres',        // Mot de passe PostgreSQL
-      database: 'afkarna_db',      // Nom de la base de données
-      autoLoadEntities: true,      // Charge automatiquement toutes les entités
-      synchronize: true,           // Synchronise la base de données
+      type: "postgres",
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     CommonModule,
     UsersModule,
@@ -33,8 +32,7 @@ import { ReplyModule } from './reply/reply.module';
     WorkspaceItemModule,
     WorkspaceModule,
     ProfileModule,
-    CommentModule,
-    ReplyModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

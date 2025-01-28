@@ -3,10 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Comment } from "../../comment/entities/comment.entity";
 
 @Entity("user")
 export class User {
@@ -35,6 +33,4 @@ export class User {
   toJSON() {
     return instanceToPlain(this);
   }
-  @OneToMany(() => Comment, comment => comment.user)
-  comments: Comment[];
 }
