@@ -1,23 +1,29 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import { SendInvitationEvent } from "./send-invitation.event";
 import { WsService } from "../ws/ws.service";
+import { NotificationsService } from "src/notifications/notifications.service";
+import { Trigger } from "src/notifications/entities/trigger.entity";
 
 @Injectable()
 export class EventsHandler {
-  constructor(private wsService: WsService) {}
+  constructor(
+    private readonly wsService: WsService,
+    private readonly notificationsService: NotificationsService,
+  ) {}
 
-  @OnEvent("invitation.created")
-  handleInvitationCreatedEvent(payload: SendInvitationEvent) {
-    this.wsService.emit(
-      "notification:new",
-      {
-        data: {
-          message: `You have been invited to join ${payload.invitation.workspace.name}`,
-          Invitation: payload.invitation,
-        },
-      },
-      `user:${payload.invitation.invitedUser.id}`,
-    );
+  @OnEvent("trigger.created")
+  async triggerCreationHandler(trigger: Trigger) {
+    for await (const user of trigger.concernedUsers()) {
+      const notification = await this.notificationsService.create({
+        trigger,
+        recipient: user,
+      });
+
+      this.wsService.emit(
+        "notification:new",
+        notification,
+        `user:${notification.recipient.id}`,
+      );
+    }
   }
 }
