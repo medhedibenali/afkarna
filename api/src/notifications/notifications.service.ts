@@ -37,7 +37,7 @@ export class NotificationsService {
       throw new Error('Workspace not found');
     }
 
-    const notification = this.notificationRepository.create();
+    const notification = this.notificationRepository.create({handled : false});
     const savedNotification = await this.notificationRepository.save(notification);
 
     createNotificationDto.type === NotificationType.Inivition ?
