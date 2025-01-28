@@ -13,7 +13,5 @@ export class WorkspaceItem {
     public show: boolean = false,
   ) {}
 
-  public toggleShow(): void {
-    this.show = !this.show;
-  }
+
 }
