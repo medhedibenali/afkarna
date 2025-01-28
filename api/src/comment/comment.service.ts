@@ -21,7 +21,7 @@ export class CommentService {
     return savedComment;
   }
 
-  async reactions(commentId: number): Promise<Record<string, number>> {
+  async reactions(commentId: string): Promise<Record<string, number>> {
     const comment = await this.commentRepository.findOne({ where: { id: commentId } });
     if (!comment) {
       throw new NotFoundException(`Comment with id ${commentId} not found`);
@@ -33,7 +33,7 @@ export class CommentService {
     return this.commentRepository.find({ relations: ["user", "replies", "workspace"] });
   }
 
-  async findOne(id: number): Promise<Comment> {
+  async findOne(id: string): Promise<Comment> {
     const comment = await this.commentRepository.findOne({ where: { id }, relations: ["user", "replies", "workspace"] });
     if (!comment) {
       throw new NotFoundException(`Comment with id ${id} not found`);
@@ -41,7 +41,7 @@ export class CommentService {
     return comment;
   }
 
-  async update(id: number, updateCommentDto: UpdateCommentDto): Promise<Comment> {
+  async update(id: string, updateCommentDto: UpdateCommentDto): Promise<Comment> {
     const comment = await this.commentRepository.preload({
       id,
       ...updateCommentDto,
@@ -54,12 +54,12 @@ export class CommentService {
     return updatedComment;
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const comment = await this.commentRepository.findOne({ where: { id } });
     if (!comment) {
       throw new NotFoundException(`Comment with id ${id} not found`);
     }
     await this.commentRepository.remove(comment);
-    this.commentGateway.emitCommentDeleted(id);
+    //this.commentGateway.emitCommentDeleted(id);
   }
 }

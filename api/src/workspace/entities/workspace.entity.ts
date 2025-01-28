@@ -31,6 +31,5 @@ export class Workspace {
   toJSON() {
     return instanceToPlain(this);
   }
-  @OneToMany(() => Comment, comment => comment.workspace)
-  comments: Comment[];
+ 
 }

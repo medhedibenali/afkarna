@@ -1,14 +1,14 @@
 import { User } from "src/users/entities/user.entity";
-import { Workspace } from "src/workspace/entities/workspace.entity";
+import { WorkspaceItem } from "src/workspace-item/entities/workspace-item.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { Reply } from "src/reply/entities/reply.entity";
 @Entity("comment")
 export class Comment {
 
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
 
-    @Column({ name: "name", nullable: true })
+    @Column({ name: "content", nullable: true })
     content: string;
 
     @Column("simple-array", { nullable: true })
@@ -28,13 +28,10 @@ export class Comment {
     
     @ManyToOne(() => User, user => user.comments)
     user: User;
-
-    @ManyToOne(() => Comment, comment => comment.replies, { nullable: true })
-    parentComment: Comment;
-
-    @OneToMany(() => Comment, comment => comment.parentComment)
-    replies: Comment[];
     
-    @ManyToOne(() => Workspace, workspace => workspace.comments)
-    workspace: Workspace;
+    @ManyToOne(() => WorkspaceItem, workspaceitem => workspaceitem.comments)
+    workspaceitem: WorkspaceItem;
+
+    @OneToMany(() => Reply, reply => reply.comment)
+    reply: Reply[];
 }

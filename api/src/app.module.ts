@@ -11,6 +11,7 @@ import { WorkspaceItemModule } from './workspace-item/workspace-item.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { ProfileModule } from "./profile/profile.module";
 import { CommentModule } from './comment/comment.module';
+import { ReplyModule } from './reply/reply.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CommentModule } from './comment/comment.module';
     WorkspaceModule,
     ProfileModule,
     CommentModule,
+    ReplyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

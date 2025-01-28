@@ -1,5 +1,6 @@
 import { instanceToPlain } from 'class-transformer';
 import { Workspace } from 'src/workspace/entities/workspace.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 import {
   Column,
   CreateDateColumn,
@@ -46,4 +47,8 @@ export class WorkspaceItem {
   toJSON() {
     return instanceToPlain(this);
   }
+  @OneToMany(() => Comment, comment => comment.workspaceitem)
+  comments: Comment[];
+
+  
 }
