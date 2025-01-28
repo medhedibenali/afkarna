@@ -6,6 +6,6 @@ export class Notification {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ nullable: false })
+    @Column({ nullable: false , default: false })
     handled: boolean;
 }
