@@ -12,6 +12,7 @@ import { WorkspaceModule } from "./workspace/workspace.module";
 import { ProfileModule } from "./profile/profile.module";
 import { NotificationsModule } from "./notifications/notifications.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import { InvitationsModule } from './invitations/invitations.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { EventEmitterModule } from "@nestjs/event-emitter";
     ProfileModule,
     NotificationsModule,
     EventEmitterModule.forRoot(),
+    InvitationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
