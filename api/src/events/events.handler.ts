@@ -6,24 +6,24 @@ import { Trigger } from "src/notifications/entities/trigger.entity";
 
 @Injectable()
 export class EventsHandler {
-    constructor(
-        private readonly wsService: WsService,
-        private readonly notificationsService: NotificationsService,
-    ) { }
+  constructor(
+    private readonly wsService: WsService,
+    private readonly notificationsService: NotificationsService,
+  ) {}
 
-    @OnEvent("trigger.created")
-    async triggerCreationHandler(trigger: Trigger) {
-        for (const user of trigger.concernedUsers()) {
-            const notification = await this.notificationsService.create({
-                trigger,
-                recipient: user,
-            });
+  @OnEvent("trigger.created")
+  async triggerCreationHandler(trigger: Trigger) {
+    for await (const user of trigger.concernedUsers()) {
+      const notification = await this.notificationsService.create({
+        trigger,
+        recipient: user,
+      });
 
-            this.wsService.emit(
-                "notification:new",
-                { ...notification, message: notification.trigger.message },
-                `user:${notification.recipient.id}`,
-            );
-        }
+      this.wsService.emit(
+        "notification:new",
+        notification,
+        `user:${notification.recipient.id}`,
+      );
     }
+  }
 }

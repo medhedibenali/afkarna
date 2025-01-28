@@ -1,13 +1,32 @@
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from "typeorm";
 import { User } from "src/users/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, TableInheritance } from "typeorm";
+import { NotImplementedException } from "@nestjs/common";
+import { Expose, instanceToPlain } from "class-transformer";
 
 @Entity("trigger")
 @TableInheritance({ column: { type: "varchar", name: "type" } })
 export abstract class Trigger {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    abstract get message(): string;
-    
-    abstract concernedUsers(): User[];
+  @Column({ readonly: true })
+  type: string;
+
+  @Expose({ name: "message" })
+  get message(): string {
+    throw new NotImplementedException();
+  }
+
+  async *concernedUsers(): AsyncIterable<User> {
+    throw new NotImplementedException();
+  }
+
+  toJSON() {
+    return instanceToPlain(this);
+  }
 }

@@ -6,11 +6,10 @@ import { CrudService } from "src/common/crud/crud.service";
 
 @Injectable()
 export class NotificationsService extends CrudService<Notification> {
-    constructor(
-        @InjectRepository(Notification) notificationRepository: Repository<
-            Notification
-        >,
-    ) {
-        super(notificationRepository);
-    }
+  constructor(
+    @InjectRepository(Notification)
+    notificationRepository: Repository<Notification>,
+  ) {
+    super(notificationRepository);
+  }
 }

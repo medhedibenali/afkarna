@@ -1,7 +1,7 @@
 import {
-    BadRequestException,
-    Injectable,
-    NotFoundException,
+  BadRequestException,
+  Injectable,
+  NotFoundException,
 } from "@nestjs/common";
 import { CrudService } from "src/common/crud/crud.service";
 import { Invitation } from "./entities/invitation.entity";
@@ -14,50 +14,49 @@ import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class InvitationsService extends CrudService<Invitation> {
-    constructor(
-        @InjectRepository(Invitation) invitationsRepository: Repository<
-            Invitation
-        >,
-        private readonly usersService: UsersService,
-    ) {
-        super(invitationsRepository);
+  constructor(
+    @InjectRepository(Invitation) invitationsRepository: Repository<Invitation>,
+    private readonly usersService: UsersService,
+  ) {
+    super(invitationsRepository);
+  }
+
+  async createInvitation({
+    workspace: workspaceId,
+    invitedUser: invitedUserEmail,
+  }: CreateInvitationDto) {
+    const invitedUser =
+      await this.usersService.findOneByEmail(invitedUserEmail);
+
+    if (!invitedUser) {
+      throw new NotFoundException();
     }
 
-    async createInvitation(
-        { workspace: workspaceId, invitedUser: invitedUserEmail }:
-            CreateInvitationDto,
-    ) {
-        const invitedUser = await this.usersService.findOneByEmail(
-            invitedUserEmail,
-        );
+    const { id } = await this.create({ workspaceId, invitedUser });
 
-        if (!invitedUser) {
-            throw new NotFoundException();
-        }
+    return this.findOne(id, { invitedUser: true });
+  }
 
-        return this.create({ workspaceId, invitedUser });
+  async updateStatus(
+    id: string,
+    { id: invitedUserId }: User,
+    status: InvitationStatus,
+  ) {
+    if (status === InvitationStatus.Pending) {
+      throw new Error("Non valid new invitation status.");
     }
 
-    async updateStatus(
-        id: string,
-        { id: invitedUserId }: User,
-        status: InvitationStatus,
-    ) {
-        if (status === InvitationStatus.Pending) {
-            throw new Error("Non valid new invitation status.");
-        }
+    const invitation = await this.repository.findOneByOrFail({
+      id,
+      invitedUserId,
+    });
 
-        const invitation = await this.repository.findOneByOrFail({
-            id,
-            invitedUserId,
-        });
-
-        if (invitation.status !== InvitationStatus.Pending) {
-            throw new BadRequestException();
-        }
-
-        invitation.status = status;
-
-        await this.repository.save(invitation);
+    if (invitation.status !== InvitationStatus.Pending) {
+      throw new BadRequestException();
     }
+
+    invitation.status = status;
+
+    await this.repository.save(invitation);
+  }
 }

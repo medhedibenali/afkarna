@@ -5,43 +5,52 @@ import { SearchDto } from "src/common/dto/search.dto";
 import { User } from "src/auth/decorators/user.decorator";
 import { User as UserEntity } from "src/users/entities/user.entity";
 import { InvitationStatus } from "./enums/invitation-status.enum";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 
 @Controller("invitations")
 export class InvitationsController {
-    constructor(private readonly invitationsService: InvitationsService) { }
+  constructor(
+    private readonly invitationsService: InvitationsService,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
-    @Post()
-    create(@Body() createInvitationDto: CreateInvitationDto) {
-        return this.invitationsService.createInvitation(createInvitationDto);
-    }
+  @Post()
+  async create(@Body() createInvitationDto: CreateInvitationDto) {
+    const invitation =
+      await this.invitationsService.createInvitation(createInvitationDto);
 
-    @Get()
-    findAll(@Query() searchDto: SearchDto, @User() user: UserEntity) {
-        return this.invitationsService.findAll(searchDto, {
-            invitedUser: user,
-        });
-    }
+    this.eventEmitter.emit("trigger.created", invitation);
 
-    @Get(":id")
-    findOne(@Param("id") id: string) {
-        return this.invitationsService.findOne(id);
-    }
+    return invitation;
+  }
 
-    @Post(":id/accept")
-    accept(@Param("id") id: string, @User() user: UserEntity) {
-        return this.invitationsService.updateStatus(
-            id,
-            user,
-            InvitationStatus.Accepted,
-        );
-    }
+  @Get()
+  findAll(@Query() searchDto: SearchDto, @User() { id: userId }: UserEntity) {
+    return this.invitationsService.findAll(searchDto, {
+      invitedUserId: userId,
+    });
+  }
 
-    @Post(":id/decline")
-    decline(@Param("id") id: string, @User() user: UserEntity) {
-        return this.invitationsService.updateStatus(
-            id,
-            user,
-            InvitationStatus.Declined,
-        );
-    }
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    return this.invitationsService.findOne(id);
+  }
+
+  @Post(":id/accept")
+  accept(@Param("id") id: string, @User() user: UserEntity) {
+    return this.invitationsService.updateStatus(
+      id,
+      user,
+      InvitationStatus.Accepted,
+    );
+  }
+
+  @Post(":id/decline")
+  decline(@Param("id") id: string, @User() user: UserEntity) {
+    return this.invitationsService.updateStatus(
+      id,
+      user,
+      InvitationStatus.Declined,
+    );
+  }
 }

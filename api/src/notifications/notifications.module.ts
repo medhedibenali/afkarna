@@ -8,13 +8,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Trigger } from "./entities/trigger.entity";
 
 @Module({
-    controllers: [NotificationsController],
-    providers: [NotificationsService],
-    imports: [
-        TypeOrmModule.forFeature([Notification, Trigger]),
-        UsersModule,
-        WorkspaceModule,
-    ],
-    exports: [NotificationsService],
+  controllers: [NotificationsController],
+  providers: [NotificationsService],
+  imports: [
+    TypeOrmModule.forFeature([Notification, Trigger]),
+    UsersModule,
+    WorkspaceModule,
+  ],
+  exports: [NotificationsService],
 })
-export class NotificationsModule { }
+export class NotificationsModule {}

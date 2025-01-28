@@ -6,32 +6,32 @@ import { InvitationStatus } from "../enums/invitation-status.enum";
 
 @ChildEntity("invitation")
 export class Invitation extends Trigger {
-    @ManyToOne(() => Workspace)
-    @JoinColumn({ name: "workspace_id" })
-    workspace: Workspace;
+  @ManyToOne(() => Workspace, { eager: true })
+  @JoinColumn({ name: "workspace_id" })
+  workspace: Workspace;
 
-    @Column({ name: "workspace_id" })
-    workspaceId: string;
+  @Column({ name: "workspace_id" })
+  workspaceId: string;
 
-    @ManyToOne(() => User)
-    @JoinColumn({ name: "invited_user_id" })
-    invitedUser: User;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "invited_user_id" })
+  invitedUser: User;
 
-    @Column({ name: "invited_user_id" })
-    invitedUserId: string;
+  @Column({ name: "invited_user_id" })
+  invitedUserId: string;
 
-    @Column({
-        type: "enum",
-        enum: InvitationStatus,
-        default: InvitationStatus.Pending,
-    })
-    status: InvitationStatus;
+  @Column({
+    type: "enum",
+    enum: InvitationStatus,
+    default: InvitationStatus.Pending,
+  })
+  status: InvitationStatus;
 
-    get message() {
-        return "invitation";
-    }
+  get message() {
+    return `You have been invited the the workspace "${this.workspace.name}".`;
+  }
 
-    concernedUsers() {
-        return [this.invitedUser];
-    }
+  async *concernedUsers(): AsyncIterable<User> {
+    yield this.invitedUser;
+  }
 }

@@ -6,12 +6,15 @@ import { User as UserEntity } from "../users/entities/user.entity";
 
 @Controller("notifications")
 export class NotificationsController {
-    constructor(private readonly notificationsService: NotificationsService) { }
+  constructor(private readonly notificationsService: NotificationsService) {}
 
-    @Get("")
-    findAll(@Query() searchDto: SearchDto, @User() user: UserEntity) {
-        return this.notificationsService.findAll(searchDto, {
-            recipient: user,
-        });
-    }
+  @Get("")
+  findAll(@Query() searchDto: SearchDto, @User() { id: userId }: UserEntity) {
+    return this.notificationsService.findAll(
+      searchDto,
+      { recipientId: userId },
+      undefined,
+      { createdAt: "DESC" },
+    );
+  }
 }

@@ -1,30 +1,35 @@
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    ManyToOne,
-    PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "../../users/entities/user.entity";
 import { Trigger } from "./trigger.entity";
 
 @Entity("notification")
 export class Notification {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @ManyToOne(() => User)
-    recipient: User;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "recipient_id" })
+  recipient: User;
 
-    @ManyToOne(() => Trigger)
-    trigger: Trigger;
+  @Column({ name: "recipient_id" })
+  recipientId: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @ManyToOne(() => Trigger, { eager: true })
+  trigger: Trigger;
 
-    @Column({ type: "bool", default: false })
-    handled: boolean;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @Column({ type: "bool", default: false })
-    read: boolean;
+  @Column({ type: "bool", default: false })
+  handled: boolean;
+
+  @Column({ type: "bool", default: false })
+  read: boolean;
 }
