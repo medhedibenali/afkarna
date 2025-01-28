@@ -1,29 +1,42 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { CommentService } from './comment.service';
 import { CommonModule } from '@angular/common';
+import { Comment} from './../comment model/comment'
+import { CommentListComponent } from "../comment-list/comment-list.component";
+import { CommentDetailComponent } from "../comment-detail/comment-detail.component";
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  imports:[CommonModule],
-  styleUrls: ['./comment.component.css']
+  imports: [CommonModule, CommentListComponent, CommonModule, CommentDetailComponent],
+  styleUrls: ['./comment.component.css'],
 })
-export class CommentComponent implements OnInit {
-  comments: any[] = [];
 
-  constructor(@Inject(CommentService) private readonly commentService: CommentService) {}
+export class CommentComponent implements OnInit {
+  private commentService = inject(CommentService);
+
+  constructor() {}
+
+  comments: WritableSignal<Comment[]> = signal([]);
+  selectedComment = this.commentService.selectedComment;
 
   ngOnInit(): void {
     // Fetch initial comments
     this.commentService.getComments().subscribe({
       next: (comments) => {
-        this.comments = comments;
+        this.comments.set(comments);
       },
       error: (err) => {
         console.error('Error fetching comments:', err);
-      }
+      },
     });
-
+ /*
     // Listen for new comments
     this.commentService.onCommentCreated().subscribe({
       next: (comment) => {
@@ -31,37 +44,24 @@ export class CommentComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error receiving new comment:', err);
-      }
-    });
-  }
-
-  addComment(content: string): void {
-    const newComment = {
-      content,
-      userId: 'user-id',
-      workspaceId: 'workspace-id',
-      creationTime: new Date().toISOString(),
-      likesCount: 0,
-      heartsCount: 0
-    };
-
-    this.commentService.createComment(newComment).subscribe({
-      next: (createdComment) => {
-        this.comments.push(createdComment);
       },
-      error: (err) => {
-        console.error('Error creating comment:', err);
-      }
     });
+    */
   }
 
-  incrementReaction(comment: any, reactionType: 'likesCount' | 'heartsCount'): void {
+ 
+
+ /* incrementReaction(
+    comment: any,
+    reactionType: 'likesCount' | 'heartsCount'
+  ): void {
     comment[reactionType]++;
     this.commentService.updateComment(comment).subscribe({
       error: (err) => {
         console.error('Error updating comment:', err);
         comment[reactionType]--; // Rollback on error
-      }
+      },
     });
   }
+  */
 }
