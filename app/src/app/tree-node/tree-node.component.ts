@@ -1,5 +1,15 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, Input } from "@angular/core";
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  linkedSignal,
+  OnInit,
+  Signal,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { WorkspaceItem } from "../workspace/model/workspace-item";
 import { WorkspaceItemService } from "../workspace/service/workspace-item.service";
 
@@ -9,9 +19,15 @@ import { WorkspaceItemService } from "../workspace/service/workspace-item.servic
   templateUrl: "./tree-node.component.html",
   styleUrl: "./tree-node.component.css",
 })
-export class TreeNodeComponent {
-  @Input()
-  node!: WorkspaceItem;
+export class TreeNodeComponent implements OnInit {
+  node = input.required<WorkspaceItem>();
+
+  children!: WritableSignal<WorkspaceItem[] | null>;
+
+  type!: Signal<string>;
+  name!: Signal<string>;
+
+  show!: WritableSignal<boolean>;
 
   stack: WorkspaceItem[] = sessionStorage.getItem("workspacesState")
     ? JSON.parse(sessionStorage.getItem("workspacesState")!).navigationStack
@@ -20,31 +36,47 @@ export class TreeNodeComponent {
   private workspaceItemService = inject(WorkspaceItemService);
   private selectedNodeSignal = this.workspaceItemService.selectedNodeSignal;
 
-  constructor() {}
-
   ngOnInit() {
-    const stack = this.stack.map((item) => item.id);
+    this.children = signal<WorkspaceItem[] | null>(
+      this.node().children ?? null,
+    );
 
-    if (stack.includes(this.node.id)) {
-      this.node.show = !this.node.show;
+    this.type = computed(() => this.node().type);
+    this.name = computed(() => this.node().name);
+
+    this.show = linkedSignal(() => this.node().show);
+
+    const stack = this.stack.map((item) => item.id);
+    const node = this.node();
+
+    if (stack.includes(node.id)) {
+      if (this.children()) {
+        return void this.show.update((value) => !value);
+      }
+
       this.workspaceItemService
-        .getWorkspaceItemsByParentId(this.node.id)
+        .getWorkspaceItemsByParentId(node.id)
         .subscribe((collection) => {
-          this.node.children = collection;
+          this.children.set(collection);
+          this.show.update((value) => !value);
         });
     }
   }
 
   toggleFolder(): void {
-    if (this.node.type === "collection") {
-      this.node.show = !this.node.show;
-      this.workspaceItemService
-        .getWorkspaceItemsByParentId(this.node.id)
-        .subscribe((collection) => {
-          this.node.children = collection;
-        });
-    } else {
-      this.selectedNodeSignal.set(this.node);
+    if (this.node().type === "note") {
+      return void this.selectedNodeSignal.set(this.node());
     }
+
+    if (this.children()) {
+      return void this.show.update((value) => !value);
+    }
+
+    this.workspaceItemService
+      .getWorkspaceItemsByParentId(this.node().id)
+      .subscribe((collections) => {
+        this.children.set(collections);
+        this.show.update((value) => !value);
+      });
   }
 }

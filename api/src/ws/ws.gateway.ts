@@ -5,6 +5,7 @@ import {
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from "@nestjs/websockets";
 import { BroadcastOperator, Server, Socket } from "socket.io";
 import { User } from "src/users/entities/user.entity";
@@ -14,6 +15,7 @@ import {
   DefaultEventsMap,
 } from "socket.io/dist/typed-events";
 import { Event } from "./models/event.model";
+import { WorkspaceItemService } from "src/workspace-item/workspace-item.service";
 
 @WebSocketGateway({
   cors: {
@@ -21,7 +23,13 @@ import { Event } from "./models/event.model";
   },
 })
 export class WsGateway implements OnGatewayInit, OnGatewayConnection {
-  constructor(private wsService: WsService) {}
+  @WebSocketServer()
+  private server: Server;
+
+  constructor(
+    private wsService: WsService,
+    private workspaceItemService: WorkspaceItemService,
+  ) {}
 
   afterInit(server: Server) {
     this.wsService.events$.subscribe(({ event, data, to, except }: Event) => {
@@ -52,6 +60,28 @@ export class WsGateway implements OnGatewayInit, OnGatewayConnection {
     }
 
     client.join(`user:${user.id}`);
+  }
+
+  @SubscribeMessage("note:open")
+  handleNoteOpen(@MessageBody() { note }, @ConnectedSocket() client: Socket) {
+    client.join(`note:${note}`);
+
+    return this.workspaceItemService.findOne(note);
+  }
+
+  @SubscribeMessage("note:close")
+  handleNoteClose(@MessageBody() { note }, @ConnectedSocket() client: Socket) {
+    client.leave(`note:${note}`);
+  }
+
+  @SubscribeMessage("note:update")
+  async handleNoteUpdate(@MessageBody() { note, content }) {
+    await this.workspaceItemService.update(note, { content });
+
+    this.server.to(`note:${note}`).emit("note:update", {
+      id: note,
+      content,
+    });
   }
 
   @SubscribeMessage("ping")

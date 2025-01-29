@@ -1,13 +1,24 @@
-<div class="editor">
-  <div class="header-wrapper">
-    <app-header [workspace]="workspace()" />
-  </div>
+@let workspace = workspace$ | async;
+@let note = note$ | async;
 
-  <div class="body">
-    <app-sidebar [workspaceId]="workspace().id" />
+@if (workspace) {
+  <div class="editor">
+    <div class="header-wrapper">
+      <app-header [workspace]="workspace" [note]="note" />
+    </div>
 
-    <main class="textarea-wrapper">
-      <app-textarea />
-    </main>
+    <div class="body">
+      <app-sidebar [workspace]="workspace" />
+
+      <main class="textarea-wrapper">
+        @if (note) {
+          <app-textarea [note]="note" />
+        } @else {
+          <div class="placeholder">
+            Select a note to get started
+          </div>
+        }
+      </main>
+    </div>
   </div>
-</div>
+}

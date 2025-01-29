@@ -1,4 +1,13 @@
+@let note = this.note();
+
 <div class="header">
   <img [routerLink]='["/"]' class="logo" [src]="logo" />
-  <h3 class="title">{{ workspace().name }}</h3>
+
+  <div class="names">
+    <h3 class="name workspace-name">{{ workspace().name }}</h3>
+
+    @if (note) {
+      <h4 class="name note-name">{{ note.name }}</h4>
+    }
+  </div>
 </div>

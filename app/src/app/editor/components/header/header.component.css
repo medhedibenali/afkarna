@@ -20,3 +20,19 @@
 
   cursor: pointer;
 }
+
+.names {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+
+  box-sizing: border-box;
+  height: 100%;
+
+  padding-block: 0.5rem;
+}
+
+.name {
+  margin: 0;
+}
