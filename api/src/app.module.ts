@@ -6,10 +6,14 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "./users/users.module";
 import { CommonModule } from "./common/common.module";
-import { WsModule } from './ws/ws.module';
-import { WorkspaceItemModule } from './workspace-item/workspace-item.module';
-import { WorkspaceModule } from './workspace/workspace.module';
+import { WsModule } from "./ws/ws.module";
+import { WorkspaceItemModule } from "./workspace-item/workspace-item.module";
+import { WorkspaceModule } from "./workspace/workspace.module";
 import { ProfileModule } from "./profile/profile.module";
+import { NotificationsModule } from "./notifications/notifications.module";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { InvitationsModule } from "./invitations/invitations.module";
+import { EventsModule } from "./events/events.module";
 
 @Module({
   imports: [
@@ -31,6 +35,10 @@ import { ProfileModule } from "./profile/profile.module";
     WorkspaceItemModule,
     WorkspaceModule,
     ProfileModule,
+    NotificationsModule,
+    EventEmitterModule.forRoot(),
+    InvitationsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
