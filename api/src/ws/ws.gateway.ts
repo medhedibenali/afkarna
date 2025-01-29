@@ -30,28 +30,28 @@ export class WsGateway implements OnGatewayConnection {
 
   @SubscribeMessage("workspace:open")
   handleOpenWorkspace(
-    @MessageBody() body: string,
+    @MessageBody()
+    { workspaceId }: { workspaceId: string },
     @ConnectedSocket() client: Socket,
   ) {
-    console.log(body);
-    const { workspaceId } = JSON.parse(body);
     client.join(`workspace:${workspaceId}`);
   }
 
   @SubscribeMessage("workspace:message")
   handleMessageWorkspace(
-    @MessageBody() body: string,
+    @MessageBody()
+    { workspaceId, message }: { workspaceId: string; message: string },
     @ConnectedSocket() client: Socket,
   ) {
-    const { workspaceId, message } = JSON.parse(body);
+    if (!client.data.user) {
+      return;
+    }
 
-    this.server
-      .to(`workspace:${workspaceId}`)
-      .emit("message", {
+    this.server.to(`workspace:${workspaceId}`).emit("message", {
       message,
       user: client.data.user,
-      createdAt: new Date()
-      });
+      createdAt: new Date(),
+    });
   }
 
   @SubscribeMessage("ping")

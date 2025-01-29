@@ -3,6 +3,8 @@ import { SidebarComponent } from "../components/sidebar/sidebar.component";
 import { WorkspaceItemService } from "../../workspace/service/workspace-item.service";
 import { CommonModule } from "@angular/common";
 import { ChatComponent } from "../components/chat/chat.component";
+import { ActivatedRoute } from "@angular/router";
+import { WsService } from "../../ws/ws.service";
 
 @Component({
   selector: "app-editor",
@@ -13,6 +15,13 @@ import { ChatComponent } from "../components/chat/chat.component";
 })
 export class EditorComponent {
   selectedNodeSignal = inject(WorkspaceItemService).selectedNodeSignal;
+  activatedRoute = inject(ActivatedRoute);
+  wsService = inject(WsService);
 
-  constructor() {}
+  worksapceId = this.activatedRoute.snapshot.params['workspace'];
+
+  constructor() {
+    this.wsService.emit("workspace:open", { workspaceId: this.worksapceId }).subscribe();
+
+  }
 }

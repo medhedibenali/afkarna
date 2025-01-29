@@ -6,10 +6,12 @@
         <div class="chat-body">
         <div class="chat-messages">
             <div *ngFor="let message of messages()" class="chat-message">
-            <div class="chat-message-user">{{message.user}}</div>
+            <div class="chat-message-metadata">
+                <div class="chat-message-user">{{message.user.username}}</div>
+                <em>{{ message.createdAt | date:'shortTime' }}</em>
+            </div>
             <div class="chat-message-text">{{message.message}}</div>
-            <em>{{ message.createdAt | date:'shortTime' }}</em>
-                
+            
             </div>
         </div>
         </div>
