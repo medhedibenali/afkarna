@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  gap: 0.5rem;
+
+  height: 100%;
+  width: 100%;
+
+  place-items: center;
+
+  background: #f4f4f4;
+}
+
+.logo {
+  margin-inline: 1rem;
+
+  width: 8rem;
+  height: fit-content;
+
+  object-fit: contain;
+
+  cursor: pointer;
+}

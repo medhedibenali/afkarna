@@ -1,16 +1,13 @@
-<div class="app-layout">
-  <!-- Sidebar Component -->
-  <app-sidebar
-    [workspaceId]='"ef4fc105-2f7a-4a6b-bd8e-c5e7fd7897ee"'
-  ></app-sidebar>
+<div class="editor">
+  <div class="header-wrapper">
+    <app-header [workspace]="workspace()" />
+  </div>
 
-  <div class="main-content">
-    <p *ngIf="!selectedNodeSignal()">
-      Your dynamic content goes here. This can be your main page content.
-    </p>
-    <div *ngIf="selectedNodeSignal()">
-      <h2>{{ selectedNodeSignal()?.name }}</h2>
-      <p>{{ selectedNodeSignal()?.content }}</p>
-    </div>
+  <div class="body">
+    <app-sidebar [workspaceId]="workspace().id" />
+
+    <main class="textarea-wrapper">
+      <app-textarea />
+    </main>
   </div>
 </div>
