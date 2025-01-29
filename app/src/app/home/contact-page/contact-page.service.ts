@@ -16,8 +16,8 @@ export class contactPageService {
   constructor() {}
   contact(contactDto: ContactDto) {
     return this.http.post<void>(`${this.contactEndpoint}`, contactDto).pipe(
-            tap((data) => void this.#contactData.set(data)),
-            map(() => {}),
-          );;
+      tap((data) => void this.#contactData.set(data)),
+      map(() => {}),
+    );
   }
 }

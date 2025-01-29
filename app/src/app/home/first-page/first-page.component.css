@@ -1,67 +1,67 @@
 .frame-8 {
-    display: flex;
-    height: 450px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 120px;
-    position: relative;
-    align-self: stretch;
-    width: 90%;
-    background-color: #e8f9ff;
-  }
-  
+  display: flex;
+  height: 450px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 120px;
+  position: relative;
+  align-self: stretch;
+  width: 90%;
+  background-color: #e8f9ff;
+}
+
 .frame-9 {
-    display: flex;
-    flex-direction: column;
-    width: 660px;
-    align-items: flex-start;
-    gap: 64px;
-    position: relative;
-  }
-  .frame-10 {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 77.18px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  width: 660px;
+  align-items: flex-start;
+  gap: 64px;
+  position: relative;
+}
+.frame-10 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 77.18px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
 .frame-11 {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  .p {
-    position: relative;
-    width: 638px;
-    margin-top: -1.29px;
-    font-weight: 400;
-    color: #3953d5;
-    font-size: 73.3px;
-    letter-spacing: 0;
-    line-height: 99.7px;
-  }
-  .put-down-your {
-    position: relative;
-    width: fit-content;
-    font-family: "DM Sans-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--ash);
-    font-size: 25.7px;
-    letter-spacing: 0;
-    line-height: 35.0px;
-  }
-  .main-section-picture {
-    position: relative;
-    width: 548.45px;
-    height: 334.2px;
-    margin-left: -6.1e-05px;
-    background-image: url(./../../../../public/login.png);
-    background-size: cover;
-    background-position: 50% 50%;
-  }    
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.p {
+  position: relative;
+  width: 638px;
+  margin-top: -1.29px;
+  font-weight: 400;
+  color: #3953d5;
+  font-size: 73.3px;
+  letter-spacing: 0;
+  line-height: 99.7px;
+}
+.put-down-your {
+  position: relative;
+  width: fit-content;
+  font-family: "DM Sans-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--ash);
+  font-size: 25.7px;
+  letter-spacing: 0;
+  line-height: 35.0px;
+}
+.main-section-picture {
+  position: relative;
+  width: 548.45px;
+  height: 334.2px;
+  margin-left: -6.1e-05px;
+  background-image: url(./../../../../public/login.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}

@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { FirstPageComponent } from './first-page.component';
+import { FirstPageComponent } from "./first-page.component";
 
-describe('FirstPageComponent', () => {
+describe("FirstPageComponent", () => {
   let component: FirstPageComponent;
   let fixture: ComponentFixture<FirstPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FirstPageComponent]
+      imports: [FirstPageComponent],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FirstPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

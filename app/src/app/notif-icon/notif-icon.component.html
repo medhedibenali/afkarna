@@ -21,7 +21,10 @@
 <mat-menu #contextMenu="matMenu">
   <ng-template matMenuContent>
     @for (notification of newNotifications(); track notification.id) {
-      <app-notif-item (update)="refresh()"  [notification]="notification"></app-notif-item>
+      <app-notif-item
+        (update)="refresh()"
+        [notification]="notification"
+      ></app-notif-item>
     }</ng-template>
 </mat-menu>
 
