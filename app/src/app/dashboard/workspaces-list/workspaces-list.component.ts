@@ -207,7 +207,12 @@ export class WorkspacesListComponent implements OnInit {
       if (newStack.length === 0) {
         if (this.workspaces().length > 0) {
           const rootCollections = this.workspaces().map(
-            (workspace) => workspace.collection,
+            (workspace) => {
+              return {
+                ...workspace.collection,
+                workspace: workspace,
+              };
+            },
           );
           this.currentItems.set(rootCollections);
           this.saveState();
