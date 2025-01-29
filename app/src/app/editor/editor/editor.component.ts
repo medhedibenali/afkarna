@@ -3,10 +3,12 @@ import { SidebarComponent } from "../components/sidebar/sidebar.component";
 import { WorkspaceItemService } from "../../workspace/service/workspace-item.service";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
+
 import { WsService } from "../../ws/ws.service";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDialog } from "@angular/material/dialog";
 import { InviteUserDialogComponent } from "../components/invite-user-dialog/invite-user-dialog.component";
+
 
 @Component({
   selector: "app-editor",
@@ -21,6 +23,7 @@ export class EditorComponent {
     console.log(data);
   });
   selectedNodeSignal = inject(WorkspaceItemService).selectedNodeSignal;
+
   private navigationStack: any;
   constructor(private dialog: MatDialog, private router: Router) {
     const state = sessionStorage.getItem("editorState");
@@ -31,6 +34,10 @@ export class EditorComponent {
       }
     }
   }
+
+  router = inject(ActivatedRoute);
+  workspaceId: string = this.router.snapshot.params["workspace"];
+
 
   openInviteUserDialog() {
      const state = sessionStorage.getItem("editorState");

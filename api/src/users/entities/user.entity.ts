@@ -1,8 +1,10 @@
 import { Exclude, instanceToPlain } from "class-transformer";
+import { Workspace } from "src/workspace/entities/workspace.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -26,6 +28,9 @@ export class User {
 
   @Column({ name: "profile_picture", nullable: true })
   profilePicture: string;
+
+  @OneToMany(() => Workspace, (workspace) => workspace.user)
+  workspaces: Workspace[];
 
   @CreateDateColumn()
   createdAt: Date;
