@@ -18,10 +18,11 @@ import { ActivatedRoute } from "@angular/router";
   styleUrl: "./editor.component.css",
 })
 export class EditorComponent {
-  selectedNodeSignal = inject(WorkspaceItemService).selectedNodeSignal;
+  workspaceItemService = inject(WorkspaceItemService);
   activatedRoute = inject(ActivatedRoute);
 
   workspaceId = this.activatedRoute.snapshot.params["workspace"];
 
   workspace = signal({ id: this.workspaceId, name: "Workspace Title" });
+  selectedNode = this.workspaceItemService.selectedNodeSignal;
 }
