@@ -1,0 +1,23 @@
+<span NgIf="this.notification() && !this.isHandled()" mat-menu-item>
+    {{ this.notification()?.trigger?.message }}
+    <svg NgIf="this.isInvitation" (click)="accept()" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
+        height="20" viewBox="0 0 48 48">
+        <path fill="#c8e6c9" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path>
+        <path fill="#4caf50"
+            d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"></path>
+    </svg>
+
+    <span style="width: 25px;"></span>
+    <svg NgIf="this.isInvitation" (click)="refuse()" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
+        height="20" viewBox="0,0,256,256" style="fill:#FA5252;">
+        <g fill="#fa5252" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+            font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <g transform="scale(10.66667,10.66667)">
+                <path
+                    d="M12,2c-5.53,0 -10,4.47 -10,10c0,5.53 4.47,10 10,10c5.53,0 10,-4.47 10,-10c0,-5.53 -4.47,-10 -10,-10zM17,15.59l-1.41,1.41l-3.59,-3.59l-3.59,3.59l-1.41,-1.41l3.59,-3.59l-3.59,-3.59l1.41,-1.41l3.59,3.59l3.59,-3.59l1.41,1.41l-3.59,3.59z">
+                </path>
+            </g>
+        </g>
+    </svg>
+</span>

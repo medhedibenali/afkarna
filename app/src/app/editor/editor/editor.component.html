@@ -1,6 +1,10 @@
 <div class="app-layout">
   <!-- Sidebar Component -->
-  <app-sidebar [workspaceId]="workspaceId"></app-sidebar>
+
+  <app-sidebar
+    [workspaceId]='workspaceId'
+  ></app-sidebar>
+
 
   <div class="main-content">
     <p *ngIf="!selectedNodeSignal()">
@@ -10,5 +14,13 @@
       <h2>{{ selectedNodeSignal()?.name }}</h2>
       <p>{{ selectedNodeSignal()?.content }}</p>
     </div>
+    <button
+    style="position: absolute; bottom: 20px; right: 20px;"
+    mat-fab
+    class="add-button"
+    (click)="openInviteUserDialog()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
   </div>
 </div>

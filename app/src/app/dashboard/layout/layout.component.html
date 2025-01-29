@@ -1,8 +1,11 @@
 <mat-toolbar class="mat-elevation-z3">
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
-  </button>
-  <img src="logo.png" alt="logo" class="logo" />
+    </button>
+    <img src="logo.png" alt="logo" class="logo" />
+    <div style="margin-left: auto; display: flex; align-items: center;">
+    <app-notif-icon></app-notif-icon>
+    </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav
