@@ -11,11 +11,13 @@ import { User } from "src/users/entities/user.entity";
 import { InvitationStatus } from "./enums/invitation-status.enum";
 import { CreateInvitationDto } from "./dto/create-invitation.dto";
 import { UsersService } from "src/users/users.service";
+import { NotificationsService } from "src/notifications/notifications.service";
 
 @Injectable()
 export class InvitationsService extends CrudService<Invitation> {
   constructor(
     @InjectRepository(Invitation) invitationsRepository: Repository<Invitation>,
+    private readonly notificationService : NotificationsService,
     private readonly usersService: UsersService,
   ) {
     super(invitationsRepository);
@@ -57,6 +59,10 @@ export class InvitationsService extends CrudService<Invitation> {
 
     invitation.status = status;
 
-    await this.repository.save(invitation);
+    const savedInvitation = await this.repository.save(invitation);
+    const notification = await this.notificationService.findNotifByTriggerId(savedInvitation);
+    notification.handled = true;
+    notification.read = true;
+    await this.notificationService.updateNotif(notification);
   }
 }

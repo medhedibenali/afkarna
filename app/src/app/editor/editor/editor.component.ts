@@ -17,7 +17,7 @@ import { InviteUserDialogComponent } from "../components/invite-user-dialog/invi
 })
 export class EditorComponent {
   workspaceId = inject(ActivatedRoute).snapshot.params['workspace'];
-  messages = inject(WsService).fromEvent("user:da856cd0-95e9-4ef0-a0ff-478db0c3a0a9").subscribe(data => {
+  messages = inject(WsService).fromEvent("notification:new").subscribe(data => {
     console.log(data);
   });
   selectedNodeSignal = inject(WorkspaceItemService).selectedNodeSignal;

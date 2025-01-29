@@ -46,7 +46,6 @@ export class WsGateway implements OnGatewayInit, OnGatewayConnection {
 
   handleConnection(client: Socket, ..._args: unknown[]) {
     const user: User | null = client.data.user;
-
     if (!user) {
       return;
     }
