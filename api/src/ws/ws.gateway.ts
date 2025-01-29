@@ -4,8 +4,9 @@ import {
   OnGatewayConnection,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from "@nestjs/websockets";
-import { Socket } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { User } from "src/users/entities/user.entity";
 
 @WebSocketGateway({
@@ -14,6 +15,9 @@ import { User } from "src/users/entities/user.entity";
   },
 })
 export class WsGateway implements OnGatewayConnection {
+  @WebSocketServer()
+  server: Server;
+
   handleConnection(client: Socket, ..._args: unknown[]) {
     const user: User | null = client.data.user;
 
@@ -22,6 +26,32 @@ export class WsGateway implements OnGatewayConnection {
     }
 
     client.join(`user:${user.id}`);
+  }
+
+  @SubscribeMessage("workspace:open")
+  handleOpenWorkspace(
+    @MessageBody() body: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    console.log(body);
+    const { workspaceId } = JSON.parse(body);
+    client.join(`workspace:${workspaceId}`);
+  }
+
+  @SubscribeMessage("workspace:message")
+  handleMessageWorkspace(
+    @MessageBody() body: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const { workspaceId, message } = JSON.parse(body);
+
+    this.server
+      .to(`workspace:${workspaceId}`)
+      .emit("message", {
+      message,
+      user: client.data.user,
+      createdAt: new Date()
+      });
   }
 
   @SubscribeMessage("ping")

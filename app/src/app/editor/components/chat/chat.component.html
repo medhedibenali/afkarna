@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="chat-container">
+        <div class="chat-header">
+        <h2>Chat</h2>
+        </div>
+        <div class="chat-body">
+        <div class="chat-messages">
+            <div *ngFor="let message of messages()" class="chat-message">
+            <div class="chat-message-user">{{message.user}}</div>
+            <div class="chat-message-text">{{message.message}}</div>
+            <em>{{ message.createdAt | date:'shortTime' }}</em>
+                
+            </div>
+        </div>
+        </div>
+        <div class="chat-footer">
+        <input type="text" placeholder="Write a message" class="form-control" [(ngModel)]="message" (keyup.enter)="sendMessage()">
+        <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
