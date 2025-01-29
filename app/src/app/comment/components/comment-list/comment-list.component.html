@@ -1,0 +1,9 @@
+<ol class="list-group">
+  @for (comment of comments(); track comment) {
+  <li
+    class="list-group-item"
+  >
+    <app-comment-detail [comment]="comment"></app-comment-detail>
+  </li>
+  }
+</ol>

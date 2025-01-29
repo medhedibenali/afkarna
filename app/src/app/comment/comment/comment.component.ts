@@ -5,26 +5,28 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { CommentService } from './comment.service';
+import { CommentService } from '../comment.service';
 import { CommonModule } from '@angular/common';
-import { Comment} from './../comment model/comment'
-import { CommentListComponent } from "../comment-list/comment-list.component";
-import { CommentDetailComponent } from "../comment-detail/comment-detail.component";
+import { Comment } from '../models/comment';
+import { CommentListComponent } from '../components/comment-list/comment-list.component';
+import { CommentDetailComponent } from '../components/comment-detail/comment-detail.component';
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  imports: [CommonModule, CommentListComponent, CommonModule, CommentDetailComponent],
+  imports: [
+    CommonModule,
+    CommentListComponent,
+    CommonModule,
+  ],
   styleUrls: ['./comment.component.css'],
 })
-
 export class CommentComponent implements OnInit {
   private commentService = inject(CommentService);
 
   constructor() {}
 
   comments: WritableSignal<Comment[]> = signal([]);
-  selectedComment = this.commentService.selectedComment;
 
   ngOnInit(): void {
     // Fetch initial comments
@@ -36,7 +38,7 @@ export class CommentComponent implements OnInit {
         console.error('Error fetching comments:', err);
       },
     });
- /*
+    /*
     // Listen for new comments
     this.commentService.onCommentCreated().subscribe({
       next: (comment) => {
@@ -49,9 +51,7 @@ export class CommentComponent implements OnInit {
     */
   }
 
- 
-
- /* incrementReaction(
+  /* incrementReaction(
     comment: any,
     reactionType: 'likesCount' | 'heartsCount'
   ): void {
