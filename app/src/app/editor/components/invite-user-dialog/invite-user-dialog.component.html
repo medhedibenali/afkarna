@@ -1,0 +1,18 @@
+<form [formGroup]="inviteUserForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Inivted User Email</mat-label>
+      <input matInput formControlName="email" required />
+      @if (inviteUserForm.get("email")?.hasError("required")) {
+        <mat-error> Email is required. </mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">
+      Invite
+    </button>
+  </mat-dialog-actions>
+</form>

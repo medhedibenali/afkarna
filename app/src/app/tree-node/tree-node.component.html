@@ -1,0 +1,15 @@
+<div>
+  <div class="node" (click)="toggleFolder()">
+    <strong *ngIf="type() === 'collection'">
+      {{ show() ? "📂" : "📁" }}
+      {{ name() }}
+    </strong>
+    <span *ngIf="type() === 'note'">📄 {{ name() }}</span>
+  </div>
+  <div *ngIf="type() === 'collection' && show()" class="child-nodes">
+    <app-tree-node
+      *ngFor="let child of children()"
+      [node]="child"
+    ></app-tree-node>
+  </div>
+</div>

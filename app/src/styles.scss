@@ -1,0 +1,41 @@
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+  )
+);
+
+body {
+  @include mat.all-component-themes($theme);
+
+  & {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+}
+
+html {
+  height: 100%;
+}
+
+.titan-one-regular {
+  font-family: "Titan One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@include mat.core();
+@include mat.color-variants-backwards-compatibility($theme);
+
+@for $i from 0 through 24 {
+  .mat-elevation-z#{$i} {
+    @include mat.elevation($i);
+  }
+}

@@ -2,6 +2,7 @@ import { NotFoundException } from "@nestjs/common";
 import {
   DeepPartial,
   DeleteResult,
+  FindOptionsOrder,
   FindOptionsRelations,
   FindOptionsWhere,
   Repository,
@@ -23,6 +24,7 @@ export abstract class CrudService<Entity extends EntityDto> {
     searchDto: SearchDto,
     where?: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[],
     relations?: FindOptionsRelations<Entity>,
+    order?: FindOptionsOrder<Entity>,
   ): Promise<Pagination<Entity>> {
     const { take = 500, skip = 0 } = searchDto;
 
@@ -31,6 +33,7 @@ export abstract class CrudService<Entity extends EntityDto> {
       relations,
       take,
       skip,
+      order,
     });
 
     return {
