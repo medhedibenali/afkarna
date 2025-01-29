@@ -15,13 +15,14 @@ export class WorkspaceService extends CrudService<Workspace> {
   ) {
     super(workspaceRepository);
   }
-  async create(createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {
+  async create(createWorkspaceDto): Promise<Workspace> {
     const rootCollection = await this.workspaceItemService.create({
       name: createWorkspaceDto.name,
       type: 'collection',
     });
     return await super.create({
       name: createWorkspaceDto.name,
+      user: createWorkspaceDto.user,
       collection: rootCollection,
     });
   }

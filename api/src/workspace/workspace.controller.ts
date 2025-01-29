@@ -1,23 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Query } from '@nestjs/common';
 import { WorkspaceService } from './workspace.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { SearchDto } from 'src/common/dto/search.dto';
+import { User } from 'src/auth/decorators/user.decorator';
+import { User as UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('workspace')
 export class WorkspaceController {
   constructor(private readonly workspaceService: WorkspaceService) {}
 
   @Post()
-  create(@Body() createWorkspaceDto: CreateWorkspaceDto) {
-    return this.workspaceService.create(createWorkspaceDto);
+  create(
+    @Body() createWorkspaceDto: CreateWorkspaceDto,
+    @User() user: UserEntity,
+  ) {
+    return this.workspaceService.create({
+      ...createWorkspaceDto,
+      user: user,
+    });
   }
 
   @Get()
-  findAll(@Body() searchDto: SearchDto) {
-    return this.workspaceService.findAll(searchDto, undefined, {
-      collection: true,
-    });
+  findAll(@Query() searchDto: SearchDto, @User() user: UserEntity,) {
+    return this.workspaceService.findAll(
+      searchDto,
+      { user: { id: user.id } },
+      {
+        collection: true,
+      },
+    );
   }
 
   @Get(':id')
