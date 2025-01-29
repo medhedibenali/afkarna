@@ -8,8 +8,11 @@ import { API } from "../../../config/api.config";
   providedIn: "root",
 })
 export class WorkspaceService {
-
-  public selectedWorkspace = signal<Workspace | null>(sessionStorage.getItem("selectedWorkspace") ? JSON.parse(sessionStorage.getItem("selectedWorkspace")!) : null);
+  public selectedWorkspace = signal<Workspace | null>(
+    sessionStorage.getItem("selectedWorkspace")
+      ? JSON.parse(sessionStorage.getItem("selectedWorkspace")!)
+      : null,
+  );
 
   private newWorkspaceSubject$ = new Subject<Workspace>();
   newWorkspace$ = this.newWorkspaceSubject$.asObservable();

@@ -13,8 +13,9 @@ export class TreeNodeComponent {
   @Input()
   node!: WorkspaceItem;
 
-  stack: WorkspaceItem[] = sessionStorage.getItem('workspacesState') ? JSON.parse(sessionStorage.getItem('workspacesState')!).navigationStack: [];
-
+  stack: WorkspaceItem[] = sessionStorage.getItem("workspacesState")
+    ? JSON.parse(sessionStorage.getItem("workspacesState")!).navigationStack
+    : [];
 
   private workspaceItemService = inject(WorkspaceItemService);
   private selectedNodeSignal = this.workspaceItemService.selectedNodeSignal;
@@ -23,7 +24,7 @@ export class TreeNodeComponent {
 
   ngOnInit() {
     const stack = this.stack.map((item) => item.id);
-    console.log(stack);
+
     if (stack.includes(this.node.id)) {
       this.node.show = !this.node.show;
       this.workspaceItemService

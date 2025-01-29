@@ -10,7 +10,11 @@ import { API } from "../../../config/api.config";
 export class WorkspaceItemService {
   private workspacesItem: WorkspaceItem[] = [];
 
-  selectedNodeSignal = signal<WorkspaceItem | null>(sessionStorage.getItem("selectedNode") ? JSON.parse(sessionStorage.getItem("selectedNode")!) : null);
+  selectedNodeSignal = signal<WorkspaceItem | null>(
+    sessionStorage.getItem("selectedNode")
+      ? JSON.parse(sessionStorage.getItem("selectedNode")!)
+      : null,
+  );
 
   private newItemSubject$ = new Subject<any>();
   newItem$ = this.newItemSubject$.asObservable();

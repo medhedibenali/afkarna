@@ -16,6 +16,5 @@ export class EditorComponent {
   router = inject(ActivatedRoute);
   workspaceId: string = this.router.snapshot.params["workspace"];
 
-
   constructor() {}
 }

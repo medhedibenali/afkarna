@@ -80,17 +80,18 @@ export class WorkspacesListComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  openInEditor(item: WorkspaceItem) {  
+  openInEditor(item: WorkspaceItem) {
     if (item.type.toLowerCase() === "note") {
       this.workspaceItemService.selectedNodeSignal.set(item);
       sessionStorage.setItem("selectedNode", JSON.stringify(item));
-    }  
+    }
     if (item.workspace) {
       this.router.navigate(["/editor", item.workspace.id]);
-      
-    }else{
-      this.router.navigate(["/editor", this.workspaceService.selectedWorkspace()?.id]);
-      
+    } else {
+      this.router.navigate([
+        "/editor",
+        this.workspaceService.selectedWorkspace()?.id,
+      ]);
     }
   }
 
@@ -185,7 +186,10 @@ export class WorkspacesListComponent implements OnInit {
     }
     if (item.workspace) {
       this.workspaceService.selectedWorkspace.set(item.workspace);
-      sessionStorage.setItem("selectedWorkspace", JSON.stringify(item.workspace));
+      sessionStorage.setItem(
+        "selectedWorkspace",
+        JSON.stringify(item.workspace),
+      );
     }
   }
 

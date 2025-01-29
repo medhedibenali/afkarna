@@ -12,6 +12,4 @@ export class WorkspaceItem {
     public createdAt: Date,
     public show: boolean = false,
   ) {}
-
-
 }
