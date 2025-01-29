@@ -6,6 +6,8 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CustomSidenavComponent } from "../custom-sidenav/custom-sidenav.component";
+import { MatBadgeModule } from "@angular/material/badge";
+import { NotifIconComponent } from "../../notif-icon/notif-icon.component";
 
 @Component({
   selector: "app-layout",
@@ -17,6 +19,10 @@ import { CustomSidenavComponent } from "../custom-sidenav/custom-sidenav.compone
     MatButtonModule,
     MatIconModule,
     CustomSidenavComponent,
+    MatBadgeModule,
+    MatButtonModule,
+    MatIconModule,
+    NotifIconComponent,
   ],
   templateUrl: "./layout.component.html",
   styleUrl: "./layout.component.css",

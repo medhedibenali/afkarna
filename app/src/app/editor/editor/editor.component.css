@@ -26,3 +26,24 @@
 
   font-weight: bold;
 }
+
+.add-button {
+  margin: auto;
+  color: rgb(58, 83, 213);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid rgba(58, 83, 213, 0.5);
+}
+
+.add-button:disabled {
+  background-color: rgba(58, 83, 213, 0.2);
+  color: rgba(58, 83, 213, 0.5);
+  border-color: rgba(58, 83, 213, 0.2);
+  cursor: not-allowed;
+}

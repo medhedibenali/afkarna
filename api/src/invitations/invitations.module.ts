@@ -4,9 +4,14 @@ import { InvitationsController } from "./invitations.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Invitation } from "./entities/invitation.entity";
 import { UsersModule } from "src/users/users.module";
+import { NotificationsModule } from "src/notifications/notifications.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Invitation]), UsersModule],
+  imports: [
+    TypeOrmModule.forFeature([Invitation]),
+    UsersModule,
+    NotificationsModule,
+  ],
   controllers: [InvitationsController],
   providers: [InvitationsService],
 })
