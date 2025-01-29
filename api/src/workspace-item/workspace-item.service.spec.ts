@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { WorkspaceItemService } from './workspace-item.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { WorkspaceItemService } from "./workspace-item.service";
 
-describe('WorkspaceItemService', () => {
+describe("WorkspaceItemService", () => {
   let service: WorkspaceItemService;
 
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('WorkspaceItemService', () => {
     service = module.get<WorkspaceItemService>(WorkspaceItemService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });

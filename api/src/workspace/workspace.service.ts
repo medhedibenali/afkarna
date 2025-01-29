@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CreateWorkspaceDto } from './dto/create-workspace.dto';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { WorkspaceItemService } from 'src/workspace-item/workspace-item.service';
-import { Workspace } from './entities/workspace.entity';
-import { CrudService } from 'src/common/crud/crud.service';
+import { Injectable } from "@nestjs/common";
+import { CreateWorkspaceDto } from "./dto/create-workspace.dto";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { WorkspaceItemService } from "src/workspace-item/workspace-item.service";
+import { Workspace } from "./entities/workspace.entity";
+import { CrudService } from "src/common/crud/crud.service";
 
 @Injectable()
 export class WorkspaceService extends CrudService<Workspace> {
@@ -15,14 +15,15 @@ export class WorkspaceService extends CrudService<Workspace> {
   ) {
     super(workspaceRepository);
   }
-  async create(createWorkspaceDto): Promise<Workspace> {
+
+  async create(createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {
     const rootCollection = await this.workspaceItemService.create({
       name: createWorkspaceDto.name,
-      type: 'collection',
+      type: "collection",
     });
-    return await super.create({
-      name: createWorkspaceDto.name,
-      user: createWorkspaceDto.user,
+
+    return super.create({
+      ...createWorkspaceDto,
       collection: rootCollection,
     });
   }
