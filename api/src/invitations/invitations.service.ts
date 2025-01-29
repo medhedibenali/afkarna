@@ -17,7 +17,7 @@ import { NotificationsService } from "src/notifications/notifications.service";
 export class InvitationsService extends CrudService<Invitation> {
   constructor(
     @InjectRepository(Invitation) invitationsRepository: Repository<Invitation>,
-    private readonly notificationService : NotificationsService,
+    private readonly notificationService: NotificationsService,
     private readonly usersService: UsersService,
   ) {
     super(invitationsRepository);
@@ -60,7 +60,8 @@ export class InvitationsService extends CrudService<Invitation> {
     invitation.status = status;
 
     const savedInvitation = await this.repository.save(invitation);
-    const notification = await this.notificationService.findNotifByTriggerId(savedInvitation);
+    const notification =
+      await this.notificationService.findNotifByTriggerId(savedInvitation);
     notification.handled = true;
     notification.read = true;
     await this.notificationService.updateNotif(notification);

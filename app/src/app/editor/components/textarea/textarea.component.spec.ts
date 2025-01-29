@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NotifIconComponent } from "./notif-icon.component";
+import { TextareaComponent } from "./textarea.component";
 
-describe("NotifIconComponent", () => {
-  let component: NotifIconComponent;
-  let fixture: ComponentFixture<NotifIconComponent>;
+describe("TextareaComponent", () => {
+  let component: TextareaComponent;
+  let fixture: ComponentFixture<TextareaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotifIconComponent],
+      imports: [TextareaComponent],
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(NotifIconComponent);
+    fixture = TestBed.createComponent(TextareaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

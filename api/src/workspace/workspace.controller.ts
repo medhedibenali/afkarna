@@ -1,10 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
+  Patch,
+  Post,
   Query,
 } from "@nestjs/common";
 import { WorkspaceService } from "./workspace.service";
@@ -33,16 +33,24 @@ export class WorkspaceController {
   findAll(@Query() searchDto: SearchDto, @User() user: UserEntity) {
     return this.workspaceService.findAll(
       searchDto,
-      { user: { id: user.id } },
       {
-        collection: true,
+        user: {
+          id: user.id,
+        },
+      },
+      {
+        collection: {
+          children: true,
+        },
       },
     );
   }
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.workspaceService.findOne(id, { collection: true });
+    return this.workspaceService.findOne(id, {
+      collection: { children: true },
+    });
   }
 
   @Get("collection/:id")

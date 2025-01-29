@@ -1,26 +1,32 @@
-<div class="app-layout">
-  <!-- Sidebar Component -->
+@let workspace = workspace$ | async;
+@let note = note$ | async;
 
-  <app-sidebar
-    [workspaceId]='workspaceId'
-  ></app-sidebar>
+@if (workspace) {
+  <div class="editor">
+    <div class="header-wrapper">
+      <app-header [workspace]="workspace" [note]="note" />
+    </div>
 
+    <div class="body">
+      <app-sidebar [workspace]="workspace" />
 
-  <div class="main-content">
-    <p *ngIf="!selectedNodeSignal()">
-      Your dynamic content goes here. This can be your main page content.
-    </p>
-    <div *ngIf="selectedNodeSignal()">
-      <h2>{{ selectedNodeSignal()?.name }}</h2>
-      <p>{{ selectedNodeSignal()?.content }}</p>
+      <main class="textarea-wrapper">
+        @if (note) {
+          <app-textarea [note]="note" />
+        } @else {
+          <div class="placeholder">
+            Select a note to get started
+          </div>
+        }
+      </main>
     </div>
     <button
-    style="position: absolute; bottom: 20px; right: 20px;"
-    mat-fab
-    class="add-button"
-    (click)="openInviteUserDialog()"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
+      style="position: absolute; bottom: 20px; right: 20px"
+      mat-fab
+      class="add-button"
+      (click)="openInviteUserDialog(workspace)"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
-</div>
+}

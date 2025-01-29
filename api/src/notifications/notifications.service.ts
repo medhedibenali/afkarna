@@ -14,11 +14,13 @@ export class NotificationsService extends CrudService<Notification> {
     super(notificationRepository);
   }
 
-  async updateNotif(notification : Notification) {
+  async updateNotif(notification: Notification) {
     await this.repository.save(notification);
   }
 
- async  findNotifByTriggerId(trigger : Trigger){
-    return await this.repository.findOneOrFail({where : { triggerId: trigger.id }});
+  async findNotifByTriggerId(trigger: Trigger) {
+    return await this.repository.findOneOrFail({
+      where: { triggerId: trigger.id },
+    });
   }
 }

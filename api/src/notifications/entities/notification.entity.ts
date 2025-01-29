@@ -18,7 +18,7 @@ export class Notification {
   @JoinColumn({ name: "recipient_id" })
   recipient: User;
 
-  @Column({ name: "recipient_id" , nullable: false })
+  @Column({ name: "recipient_id", nullable: false })
   recipientId: string;
 
   @ManyToOne(() => Trigger, { eager: true })

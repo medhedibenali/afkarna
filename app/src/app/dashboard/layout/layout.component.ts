@@ -6,7 +6,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CustomSidenavComponent } from "../custom-sidenav/custom-sidenav.component";
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from "@angular/material/badge";
 import { NotifIconComponent } from "../../notif-icon/notif-icon.component";
 
 @Component({
@@ -22,8 +22,8 @@ import { NotifIconComponent } from "../../notif-icon/notif-icon.component";
     MatBadgeModule,
     MatButtonModule,
     MatIconModule,
-    NotifIconComponent
-],
+    NotifIconComponent,
+  ],
   templateUrl: "./layout.component.html",
   styleUrl: "./layout.component.css",
   standalone: true,
