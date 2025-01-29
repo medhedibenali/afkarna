@@ -1,4 +1,4 @@
-import { IsOptional, IsEnum } from 'class-validator';
+import { IsOptional, IsEnum } from "class-validator";
 
 export class UpdateWorkspaceItemDto {
   @IsOptional()
