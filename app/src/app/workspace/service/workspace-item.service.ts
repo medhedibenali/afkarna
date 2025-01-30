@@ -42,4 +42,10 @@ export class WorkspaceItemService {
   deleteItem(id: string) {
     return this.http.delete<any>(`${API.workspceItem}/${id}`);
   }
+
+  updateItemName(id: string, newName: string) {
+    return this.http.patch<any>(`${API.workspceItem}/${id}`, {
+      name: newName,
+    });
+  }
 }
