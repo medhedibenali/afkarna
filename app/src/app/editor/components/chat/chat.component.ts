@@ -1,53 +1,54 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
-  signal,
-  WritableSignal,
   input,
-} from '@angular/core';
-import { WsService } from '../../../ws/ws.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+  model,
+} from "@angular/core";
+import { WsService } from "../../../ws/ws.service";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { scan } from "rxjs";
 
 interface ChatMessage {
-  message: string;
+  id: string;
+  content: string;
   user: any;
   createdAt: Date;
 }
-@Component({
-  selector: 'app-chat',
-  imports: [FormsModule, CommonModule],
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.css',
-})
-export class ChatComponent implements OnInit {
-  private wsService = inject(WsService);
-  workspaceId = input.required<string>();
-  messages: WritableSignal<ChatMessage[]> = signal([]);
-  message: string = '';
-  //user: User;
 
-  ngOnInit() {
-    this.wsService
-      .emit('workspace:open', { workspaceId: this.workspaceId() })
-      .subscribe();
-    this.wsService.fromEvent<ChatMessage>('message').subscribe((message) => {
-      this.messages.update((messages) => [...messages, message]);
-    });
-  }
+@Component({
+  selector: "app-chat",
+  imports: [FormsModule, CommonModule],
+  templateUrl: "./chat.component.html",
+  styleUrl: "./chat.component.css",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ChatComponent {
+  private wsService = inject(WsService);
+
+  workspace = input.required<string>();
+
+  content = model<string>("");
+  messages$ = this.wsService.fromEvent<ChatMessage>("workspace:message").pipe(
+    scan<ChatMessage, ChatMessage[]>(
+      (messages, message) => [...messages, message],
+      [],
+    ),
+  );
 
   sendMessage() {
-    if (!this.message.trim()) {
+    if (!this.content().trim()) {
       return;
     }
 
     this.wsService
-      .emit('workspace:message', {
-        workspaceId: this.workspaceId(),
-        message: this.message,
+      .emit("workspace:message", {
+        workspace: this.workspace(),
+        content: this.content(),
       })
       .subscribe();
-    this.message = '';
+
+    this.content.set("");
   }
 }

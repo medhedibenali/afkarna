@@ -20,7 +20,7 @@ export class LoginComponent {
     }
 
     this.authService.login(form.value as LoginDto).subscribe(() => {
-      this.router.navigate([""]);
+      this.router.navigate(["/"]);
     });
   }
 }

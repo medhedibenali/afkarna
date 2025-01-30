@@ -19,6 +19,7 @@ import { Workspace } from "../../workspace/model/workspace";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ConfirmDeleteDialogComponent } from "../cofirm-delete-dialog/confirm-delete-dialog.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-workspaces-list",
@@ -42,6 +43,7 @@ export class WorkspacesListComponent implements OnInit {
     private dialog: MatDialog,
   ) {}
   private workspaceItemService = inject(WorkspaceItemService);
+  router = inject(Router);
 
   workspaces = signal<Workspace[]>([]);
   currentItems = signal<WorkspaceItem[]>([]);
@@ -78,8 +80,19 @@ export class WorkspacesListComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 
-  openInEditor(item: Workspace | WorkspaceItem) {
-    // Implement logic to open the item in an editor
+  openInEditor(item: WorkspaceItem) {
+    if (item.type.toLowerCase() === "note") {
+      this.workspaceItemService.selectedNodeSignal.set(item);
+      sessionStorage.setItem("selectedNode", JSON.stringify(item));
+    }
+    if (item.workspace) {
+      this.router.navigate(["/editor", item.workspace.id]);
+    } else {
+      this.router.navigate([
+        "/editor",
+        this.workspaceService.selectedWorkspace()?.id,
+      ]);
+    }
   }
 
   edit(item: Workspace | WorkspaceItem) {
@@ -118,7 +131,12 @@ export class WorkspacesListComponent implements OnInit {
       this.workspaceService.getWorkspaces().subscribe((response) => {
         this.workspaces.set(response.data);
         const rootCollections = response.data.map(
-          (workspace) => workspace.collection,
+          (workspace) => {
+            return {
+              ...workspace.collection,
+              workspace: workspace,
+            };
+          },
         );
         this.currentItems.set(rootCollections);
         this.navigationStack.set([]);
@@ -166,6 +184,13 @@ export class WorkspacesListComponent implements OnInit {
       this.saveState();
     } else if (item.type.toLowerCase() === "note") {
     }
+    if (item.workspace) {
+      this.workspaceService.selectedWorkspace.set(item.workspace);
+      sessionStorage.setItem(
+        "selectedWorkspace",
+        JSON.stringify(item.workspace),
+      );
+    }
   }
 
   private loadCollectionContents(collectionId: string) {
@@ -186,7 +211,12 @@ export class WorkspacesListComponent implements OnInit {
       if (newStack.length === 0) {
         if (this.workspaces().length > 0) {
           const rootCollections = this.workspaces().map(
-            (workspace) => workspace.collection,
+            (workspace) => {
+              return {
+                ...workspace.collection,
+                workspace: workspace,
+              };
+            },
           );
           this.currentItems.set(rootCollections);
           this.saveState();

@@ -6,13 +6,13 @@ import {
   Patch,
   Param,
   Delete,
-} from '@nestjs/common';
-import { WorkspaceItemService } from './workspace-item.service';
-import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
-import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
-import { SearchDto } from 'src/common/dto/search.dto';
+} from "@nestjs/common";
+import { WorkspaceItemService } from "./workspace-item.service";
+import { CreateWorkspaceItemDto } from "./dto/create-workspace-item.dto";
+import { UpdateWorkspaceItemDto } from "./dto/update-workspace-item.dto";
+import { SearchDto } from "src/common/dto/search.dto";
 
-@Controller('workspace-item')
+@Controller("workspace-item")
 export class WorkspaceItemController {
   constructor(private readonly workspaceItemService: WorkspaceItemService) {}
 
@@ -26,27 +26,26 @@ export class WorkspaceItemController {
     return this.workspaceItemService.findAll(searchDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.workspaceItemService.findOne(id,{children: true});
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    return this.workspaceItemService.findOne(id, { children: true });
   }
 
-  @Get('parent/:id')
-  findAllByParentId(@Param('id') id: string) {
+  @Get("parent/:id")
+  findAllByParentId(@Param("id") id: string) {
     return this.workspaceItemService.findAllByParentId(id);
   }
 
-  @Patch(':id')
+  @Patch(":id")
   update(
-    @Param('id') id: string,
+    @Param("id") id: string,
     @Body() updateWorkspaceItemDto: UpdateWorkspaceItemDto,
   ) {
     return this.workspaceItemService.update(id, updateWorkspaceItemDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.workspaceItemService.remove(id);
   }
-
 }

@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { CreateWorkspaceItemDto } from './dto/create-workspace-item.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { WorkspaceItem } from './entities/workspace-item.entity';
-import { CrudService } from 'src/common/crud/crud.service';
-import { UpdateWorkspaceItemDto } from './dto/update-workspace-item.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { CreateWorkspaceItemDto } from "./dto/create-workspace-item.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { WorkspaceItem } from "./entities/workspace-item.entity";
+import { CrudService } from "src/common/crud/crud.service";
+import { UpdateWorkspaceItemDto } from "./dto/update-workspace-item.dto";
 
 @Injectable()
 export class WorkspaceItemService extends CrudService<WorkspaceItem> {
@@ -19,7 +19,7 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
     if (createWorkspaceItemDto.parentId) {
       const parent = await super.findOne(createWorkspaceItemDto.parentId);
       if (!parent) {
-        throw new NotFoundException('Parent not found');
+        throw new NotFoundException("Parent not found");
       }
       return super.create({ ...createWorkspaceItemDto, parent });
     }
@@ -34,7 +34,7 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
     if (updateWorkspaceItemDto.parentId) {
       const parent = await super.findOne(updateWorkspaceItemDto.parentId);
       if (!parent) {
-        throw new NotFoundException('Parent not found');
+        throw new NotFoundException("Parent not found");
       }
       return super.update(id, { ...updateWorkspaceItemDto, parent });
     }
@@ -49,7 +49,7 @@ export class WorkspaceItemService extends CrudService<WorkspaceItem> {
 
   async remove(id: string) {
     const workspaceItem = await super.findOne(id);
-    if (workspaceItem.type == 'note') {
+    if (workspaceItem.type == "note") {
       return super.remove(id);
     } else {
       const children = await this.findAllByParentId(id);

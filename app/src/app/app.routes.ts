@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignUpComponent } from "./auth/sign-up/sign-up.component";
+import { HomepageComponent } from "./homepage/homepage.component";
 import { EditorComponent } from "./editor/editor/editor.component";
 import { LayoutComponent } from "./dashboard/layout/layout.component";
 import { WorkspacesListComponent } from "./dashboard/workspaces-list/workspaces-list.component";
@@ -32,5 +33,9 @@ export const routes: Routes = [
       { path: "workspaces", component: WorkspacesListComponent },
       { path: "shared_with_me", component: SharedWithMeComponent },
     ],
+  },
+  {
+    path: "",
+    component: HomepageComponent,
   },
 ];
