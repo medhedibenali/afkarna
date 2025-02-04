@@ -49,7 +49,7 @@ export class SignUpComponent {
     }
 
     this.authService.signUp(this.form.value as SignUpDto).subscribe(() => {
-      this.router.navigate([""]);
+      this.router.navigate(["/"]);
     });
   }
 

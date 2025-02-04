@@ -6,6 +6,7 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsException,
 } from "@nestjs/websockets";
 import { BroadcastOperator, Server, Socket } from "socket.io";
 import { User } from "src/users/entities/user.entity";
@@ -59,6 +60,43 @@ export class WsGateway implements OnGatewayInit, OnGatewayConnection {
     }
 
     client.join(`user:${user.id}`);
+  }
+
+  @SubscribeMessage("workspace:open")
+  handleWorkspaceOpen(
+    @MessageBody() { workspace },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.join(`workspace:${workspace}`);
+  }
+
+  @SubscribeMessage("workspace:close")
+  handleWorkspaceClose(
+    @MessageBody() { workspace },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.join(`workspace:${workspace}`);
+  }
+
+  @SubscribeMessage("workspace:message")
+  handleWorkspaceMessage(
+    @MessageBody() { workspace, content },
+    @ConnectedSocket() client: Socket,
+  ) {
+    if (!client.data.user) {
+      return;
+    }
+
+    if (typeof content !== "string") {
+      throw new WsException("Invalid message type.");
+    }
+
+    this.server.to(`workspace:${workspace}`).emit("workspace:message", {
+      id: crypto.randomUUID(),
+      content,
+      user: client.data.user,
+      createdAt: new Date(),
+    });
   }
 
   @SubscribeMessage("note:open")

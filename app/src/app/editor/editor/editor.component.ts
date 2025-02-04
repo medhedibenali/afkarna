@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SidebarComponent } from "../components/sidebar/sidebar.component";
@@ -6,13 +12,20 @@ import { WorkspaceItemService } from "../../workspace/service/workspace-item.ser
 import { TextareaComponent } from "../components/textarea/textarea.component";
 import { HeaderComponent } from "../components/header/header.component";
 import { WorkspaceService } from "../../workspace/service/workspace.service";
-import { distinctUntilChanged, filter, map, switchMap } from "rxjs";
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  pairwise,
+  startWith,
+  switchMap,
+  tap,
+} from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { WsService } from "../../ws/ws.service";
-import { MatIconModule } from "@angular/material/icon";
-import { MatDialog } from "@angular/material/dialog";
-import { InviteUserDialogComponent } from "../components/invite-user-dialog/invite-user-dialog.component";
-import { Workspace } from "../../workspace/model/workspace";
+import { ChatComponent } from "../components/chat/chat.component";
+import { CommunicationSidebar } from "../types/communication-sidebar.type";
+import { ChatService } from "../services/chat.service";
 
 @Component({
   selector: "app-editor",
@@ -21,7 +34,7 @@ import { Workspace } from "../../workspace/model/workspace";
     CommonModule,
     TextareaComponent,
     HeaderComponent,
-    MatIconModule,
+    ChatComponent,
   ],
   templateUrl: "./editor.component.html",
   styleUrl: "./editor.component.css",
@@ -31,15 +44,27 @@ export class EditorComponent {
   workspaceService = inject(WorkspaceService);
   workspaceItemService = inject(WorkspaceItemService);
   activatedRoute = inject(ActivatedRoute);
+  chatService = inject(ChatService);
   wsService = inject(WsService);
-  dialog = inject(MatDialog);
   router = inject(Router);
 
   workspace$ = this.activatedRoute.params.pipe(
     map((params) => params["workspace"]),
-    switchMap((workspaceId) =>
-      this.workspaceService.getWorkspaceById(workspaceId)
-    ),
+    switchMap((workspace) => this.workspaceService.getWorkspaceById(workspace)),
+    startWith(null),
+    pairwise(),
+    tap(([oldWorkspace, newWorkspace]) => {
+      if (oldWorkspace) {
+        this.wsService.emit("workspace:close", { workspace: oldWorkspace.id })
+          .subscribe();
+      }
+
+      this.wsService.emit("workspace:open", { workspace: newWorkspace!.id })
+        .subscribe(() => {
+          this.chatService.workspace.set(newWorkspace!.id);
+        });
+    }),
+    map(([, newWorkspace]) => newWorkspace!),
   );
   selectedNode = this.workspaceItemService.selectedNodeSignal;
   note$ = toObservable(this.selectedNode).pipe(
@@ -47,36 +72,17 @@ export class EditorComponent {
     distinctUntilChanged(),
   );
 
-  navigationStack!: unknown[];
+  #communicationSidebar = signal<CommunicationSidebar>(null);
+  communicationSidebarVisible = computed(() =>
+    this.#communicationSidebar() !== null
+  );
+  chatVisible = computed(() => this.#communicationSidebar() === "chat");
 
-  constructor() {
-    const state = sessionStorage.getItem("editorState");
-
-    if (!state) {
-      return;
+  toggleCommunicationSidebar(newCommunicationSidebar: CommunicationSidebar) {
+    if (this.#communicationSidebar() === newCommunicationSidebar) {
+      return void this.#communicationSidebar.set(null);
     }
 
-    const { navigationStack } = JSON.parse(state);
-
-    if (navigationStack.length > 0) {
-      this.navigationStack = navigationStack;
-    }
-  }
-
-  openInviteUserDialog({ id: workspaceId }: Workspace) {
-    const state = sessionStorage.getItem("editorState");
-
-    if (state) {
-      const { navigationStack } = JSON.parse(state);
-      this.navigationStack = navigationStack;
-    }
-
-    const dialogRef = this.dialog.open(InviteUserDialogComponent, {
-      data: {
-        workspaceId,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe();
+    this.#communicationSidebar.set(newCommunicationSidebar);
   }
 }

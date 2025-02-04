@@ -1,7 +1,9 @@
+<h2 mat-dialog-title>Invite User</h2>
+
 <form [formGroup]="inviteUserForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content>
-    <mat-form-field appearance="fill">
-      <mat-label>Inivted User Email</mat-label>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>User Email</mat-label>
       <input matInput formControlName="email" required />
       @if (inviteUserForm.get("email")?.hasError("required")) {
         <mat-error> Email is required. </mat-error>
