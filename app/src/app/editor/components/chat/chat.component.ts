@@ -2,20 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  input,
   model,
 } from "@angular/core";
-import { WsService } from "../../../ws/ws.service";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { scan } from "rxjs";
-
-interface ChatMessage {
-  id: string;
-  content: string;
-  user: any;
-  createdAt: Date;
-}
+import { ChatService } from "../../services/chat.service";
 
 @Component({
   selector: "app-chat",
@@ -25,30 +16,13 @@ interface ChatMessage {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatComponent {
-  private wsService = inject(WsService);
-
-  workspace = input.required<string>();
+  private chatService = inject(ChatService);
 
   content = model<string>("");
-  messages$ = this.wsService.fromEvent<ChatMessage>("workspace:message").pipe(
-    scan<ChatMessage, ChatMessage[]>(
-      (messages, message) => [...messages, message],
-      [],
-    ),
-  );
+  messages$ = this.chatService.messages$;
 
-  sendMessage() {
-    if (!this.content().trim()) {
-      return;
-    }
-
-    this.wsService
-      .emit("workspace:message", {
-        workspace: this.workspace(),
-        content: this.content(),
-      })
-      .subscribe();
-
+  send() {
+    this.chatService.sendMessage(this.content());
     this.content.set("");
   }
 }

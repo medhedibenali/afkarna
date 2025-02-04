@@ -1,27 +1,28 @@
-<div class="row">
-    <div class="chat-container">
-        <div class="chat-header">
-        <h2>Chat</h2>
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>Chat</h2>
+  </div>
+  <div class="chat-body">
+    <div class="chat-messages">
+      @for (message of messages$ | async; track $index) {
+        <div class="chat-message">
+          <div class="chat-message-metadata">
+            <div class="chat-message-user">{{ message.user.username }}</div>
+            <em>{{ message.createdAt | date:"shortTime" }}</em>
+          </div>
+          <div class="chat-message-text">{{ message.content }}</div>
         </div>
-        <div class="chat-body">
-        <div class="chat-messages">
-
-          @for(message of messages$ | async; track message.id) {
-            <div class="chat-message">
-            <div class="chat-message-metadata">
-                <div class="chat-message-user">{{message.user.username}}</div>
-                <em>{{ message.createdAt | date:'shortTime' }}</em>
-            </div>
-            <div class="chat-message-text">{{message.content}}</div>
-
-            </div>
-          }
-        </div>
-        </div>
-        <div class="chat-footer">
-        <input type="text" placeholder="Write a message" class="form-control" [(ngModel)]="content" (keyup.enter)="sendMessage()">
-        <button class="btn btn-primary" (click)="sendMessage()">Send</button>
-        </div>
+      }
     </div>
+  </div>
+  <div class="chat-footer">
+    <input
+      type="text"
+      placeholder="Write a message"
+      class="form-control"
+      [(ngModel)]="content"
+      (keyup.enter)="send()"
+    >
+    <button class="btn btn-primary" (click)="send()">Send</button>
+  </div>
 </div>
-

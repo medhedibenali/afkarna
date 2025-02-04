@@ -1,13 +1,34 @@
+@let workspace = this.workspace();
 @let note = this.note();
 
 <div class="header">
   <img [routerLink]='["/"]' class="logo" [src]="logo" />
 
   <div class="names">
-    <h3 class="name workspace-name">{{ workspace().name }}</h3>
+    <h3 class="name workspace-name">{{ workspace.name }}</h3>
 
     @if (note) {
       <h4 class="name note-name">{{ note.name }}</h4>
     }
+  </div>
+
+  <div class="buttons">
+    <div class="communication-buttons">
+      <button
+        mat-mini-fab
+        class="communication-button"
+        (click)='toggleSidebar("chat")'
+      >
+        <mat-icon>forum</mat-icon>
+      </button>
+    </div>
+
+    <button
+      mat-fab
+      class="add-button"
+      (click)="openInviteUserDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
 </div>
