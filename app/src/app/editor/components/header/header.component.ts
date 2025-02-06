@@ -22,7 +22,6 @@ import { CommunicationSidebar } from "../../types/communication-sidebar.type";
 })
 export class HeaderComponent {
   dialog = inject(MatDialog);
-
   workspace = input.required<Workspace>();
   note = input.required<WorkspaceItem | null>();
 

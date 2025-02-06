@@ -23,6 +23,8 @@
 
 .textarea-wrapper {
   grid-column: 2 / -1;
+
+  background: #f4f4f4;
 }
 
 .placeholder {

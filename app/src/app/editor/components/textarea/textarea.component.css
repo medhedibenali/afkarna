@@ -15,4 +15,6 @@
   overflow: auto;
 
   resize: none;
+
+  border-radius: 10px;
 }
