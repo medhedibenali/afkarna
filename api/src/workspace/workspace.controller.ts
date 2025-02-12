@@ -58,11 +58,16 @@ export class WorkspaceController {
     return this.workspaceService.findOneByRootCollectionId(collectionId);
   }
 
-  @Patch(":id")
+  @Patch(":id/:rootCollectionId")
   update(
     @Param("id") id: string,
+    @Param("rootCollectionId") rootCollectionId: string,
     @Body() updateWorkspaceDto: UpdateWorkspaceDto,
   ) {
-    return this.workspaceService.update(id, updateWorkspaceDto);
+    return this.workspaceService.updateWorkspace(
+      id,
+      rootCollectionId,
+      updateWorkspaceDto,
+    );
   }
 }

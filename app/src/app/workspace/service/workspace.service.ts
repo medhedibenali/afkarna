@@ -34,4 +34,10 @@ export class WorkspaceService {
       }),
     );
   }
+
+  updateWorkspaceName(workspaceId: string, rootCollectionId: string, newName: string) {
+    return this.http.patch<Workspace>(`${API.workspace}/${workspaceId}/${rootCollectionId}`, {
+      name: newName,
+    });
+  }
 }

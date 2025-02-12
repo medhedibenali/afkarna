@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { WorkspaceItemService } from "src/workspace-item/workspace-item.service";
 import { Workspace } from "./entities/workspace.entity";
 import { CrudService } from "src/common/crud/crud.service";
+import { UpdateWorkspaceDto } from "./dto/update-workspace.dto";
 
 @Injectable()
 export class WorkspaceService extends CrudService<Workspace> {
@@ -32,5 +33,16 @@ export class WorkspaceService extends CrudService<Workspace> {
     return await this.workspaceRepository.findOne({
       where: { collection: { id: collectionId } },
     });
+  }
+
+  async updateWorkspace(
+    workspaceId: string,
+    workspaceItemId: string,
+    updateWorkspaceDto: UpdateWorkspaceDto,
+  ) {
+    await this.workspaceItemService.update(workspaceItemId, {
+      name: updateWorkspaceDto.name,
+    });
+    return await super.update(workspaceId, updateWorkspaceDto);
   }
 }
