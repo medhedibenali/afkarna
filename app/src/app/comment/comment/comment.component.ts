@@ -4,38 +4,38 @@ import {
   OnInit,
   signal,
   WritableSignal,
-} from '@angular/core';
-import { CommentService } from '../comment.service';
-import { CommonModule } from '@angular/common';
-import { Comment } from '../models/comment';
-import { CommentListComponent } from '../components/comment-list/comment-list.component';
-import { CommentDetailComponent } from '../components/comment-detail/comment-detail.component';
+} from "@angular/core";
+import { CommentService } from "../comment.service";
+import { CommonModule } from "@angular/common";
+import { Comment } from "../models/comment";
+import { CommentListComponent } from "../components/comment-list/comment-list.component";
+import { CommentDetailComponent } from "../components/comment-detail/comment-detail.component";
 
 @Component({
-  selector: 'app-comment',
-  templateUrl: './comment.component.html',
+  selector: "app-comment",
+  templateUrl: "./comment.component.html",
   imports: [
     CommonModule,
     CommentListComponent,
     CommonModule,
   ],
-  styleUrls: ['./comment.component.css'],
+  styleUrls: ["./comment.component.css"],
 })
 export class CommentComponent implements OnInit {
   private commentService = inject(CommentService);
 
-  constructor() {}
+  constructor() { }
 
   comments: WritableSignal<Comment[]> = signal([]);
 
   ngOnInit(): void {
     // Fetch initial comments
     this.commentService.getComments().subscribe({
-      next: (comments) => {
+      next: ({ data: comments }) => {
         this.comments.set(comments);
       },
       error: (err) => {
-        console.error('Error fetching comments:', err);
+        console.error("Error fetching comments:", err);
       },
     });
     /*

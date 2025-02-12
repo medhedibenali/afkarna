@@ -1,11 +1,11 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Comment, NewComment } from './models/comment';
-import { API } from '../../config/api.config';
+import { inject, Injectable, signal } from "@angular/core";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Comment, NewComment } from "./models/comment";
+import { API } from "../../config/api.config";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CommentService {
   private http = inject(HttpClient);
@@ -14,11 +14,11 @@ export class CommentService {
   selectedComment = this.#selectComment.asReadonly();
 
   getComments() {
-    return this.http.get<Comment[]>(API.comment);
+    return this.http.get<{ data: Comment[]; count: number }>(API.comment);
   }
 
-  addComment(comment: Comment): Observable<any> {
-    return this.http.post<any>(API.comment, comment);
+  addComment(comment: Comment): Observable<Comment> {
+    return this.http.post<Comment>(API.comment, comment);
   }
 
   getCommentById(id: string): Observable<Comment> {
