@@ -6,36 +6,39 @@ import { EditorComponent } from "./editor/editor/editor.component";
 import { LayoutComponent } from "./dashboard/layout/layout.component";
 import { WorkspacesListComponent } from "./dashboard/workspaces-list/workspaces-list.component";
 import { SharedWithMeComponent } from "./dashboard/shared-with-me/shared-with-me.component";
+import { isNotAuthenticatedCanMatchGuard } from "./auth/guards/is-not-authenticated-can-match.guard";
+import { isNotAuthenticatedCanActivateChildGuard } from "./auth/guards/is-not-authenticated-can-activate-child.guard";
+import { isAuthenticatedCanActivateChildGuard } from "./auth/guards/is-authenticated-can-activate-child.guard";
+import { isAuthenticatedCanActivateGuard } from "./auth/guards/is-authenticated-can-activate.guard";
 
 export const routes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: "full" },
   {
-    path: "auth",
-    pathMatch: "full",
-    redirectTo: "auth/login",
+    path: "",
+    canMatch: [isNotAuthenticatedCanMatchGuard],
+    component: HomepageComponent,
   },
   {
     path: "auth",
+    canActivateChild: [isNotAuthenticatedCanActivateChildGuard],
     children: [
+      { path: "", redirectTo: "login", pathMatch: "full" },
       { path: "login", component: LoginComponent },
       { path: "sign-up", component: SignUpComponent },
     ],
   },
   {
-    path: "editor/:workspace",
-    component: EditorComponent,
-  },
-  {
-    path: "dashboard",
+    path: "",
+    canActivateChild: [isAuthenticatedCanActivateChildGuard],
     component: LayoutComponent,
     children: [
       { path: "", redirectTo: "workspaces", pathMatch: "full" },
       { path: "workspaces", component: WorkspacesListComponent },
-      { path: "shared_with_me", component: SharedWithMeComponent },
+      { path: "shared-with-me", component: SharedWithMeComponent },
     ],
   },
   {
-    path: "",
-    component: HomepageComponent,
+    path: "editor/:workspace",
+    canActivate: [isAuthenticatedCanActivateGuard],
+    component: EditorComponent,
   },
 ];

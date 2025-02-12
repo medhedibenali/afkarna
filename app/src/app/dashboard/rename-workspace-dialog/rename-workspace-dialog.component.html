@@ -4,9 +4,9 @@
     <mat-form-field appearance="fill">
       <mat-label>New Name</mat-label>
       <input matInput formControlName="name" required />
-      @if (renameForm.get('name')?.hasError('required')) {
+      @if (renameForm.get("name")?.hasError("required")) {
         <mat-error>
-        Name is required. 
+          Name is required.
         </mat-error>}
     </mat-form-field>
   </mat-dialog-content>

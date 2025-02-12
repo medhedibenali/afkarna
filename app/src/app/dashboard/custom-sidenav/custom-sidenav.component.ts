@@ -28,11 +28,11 @@ export class CustomSidenavComponent {
   }
 
   menuItems = signal<MenuItem[]>([
-    { icon: "workspaces", name: "Workspaces", route: "/dashboard/workspaces" },
+    { icon: "workspaces", name: "Workspaces", route: "/workspaces" },
     {
       icon: "people",
       name: "Shared with me",
-      route: "/dashboard/shared_with_me",
+      route: "/shared-with-me",
     },
   ]);
 
@@ -73,6 +73,6 @@ export class CustomSidenavComponent {
       fragment: "ignored",
       matrixParams: "ignored",
     };
-    return this.router.isActive("/dashboard/workspaces", options);
+    return this.router.isActive("/workspaces", options);
   }
 }
