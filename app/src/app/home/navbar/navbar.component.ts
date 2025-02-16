@@ -1,6 +1,8 @@
 import { ViewportScroller } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component, inject, Signal } from "@angular/core";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from "../../auth/services/auth.service";
+import { routes } from "../../app.routes";
 
 @Component({
   selector: "app-navbar",
@@ -10,8 +12,18 @@ import { RouterLink } from "@angular/router";
 })
 export class NavbarComponent {
   private viewportScroller = inject(ViewportScroller);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  isAuthenticated= this.authService.isAuthenticated;
 
   scrollTo(elementId: string): void {
     this.viewportScroller.scrollToAnchor(elementId);
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 }
