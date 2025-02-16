@@ -16,8 +16,7 @@
       >Contact Us</a>
     </div>
     <div class="frame-5">
-      @if(!isAuthenticated()){
-        <button
+      <button
         class="frame-6 button6"
         [routerLink]='["/auth/sign-up"]'
         routerLinkActive="active"
@@ -31,18 +30,6 @@
       >
         <div class="text-wrapper-4">Log in</div>
       </button>
-      }
-      @else{
-        <button
-        class="frame-6 button6"
-        (click)="logout()"
-        routerLinkActive="active"
-      >
-        <div class="text-wrapper-3">Logout</div>
-      </button>
-      }
-
-      
     </div>
   </div>
 </div>

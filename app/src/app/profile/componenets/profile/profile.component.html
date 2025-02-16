@@ -1,0 +1,29 @@
+@let profile = profile$ | async;
+
+@if (profile) {
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    class="profile-indicator"
+    aria-label="profile picture with a menu having username and logout button"
+  >
+    @if (!profile.profilePicture) {
+      <span class="placeholder">{{ placeholder(profile) }}</span>
+    } @else {
+      <img
+        [src]="profilePicture(profile)"
+        class="profile-picture"
+        alt="logged-in user profile picture"
+      />
+    }
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item disabled>
+      <span>{{ profile.username }}</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+}

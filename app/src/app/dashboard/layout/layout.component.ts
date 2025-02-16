@@ -8,6 +8,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomSidenavComponent } from "../custom-sidenav/custom-sidenav.component";
 import { MatBadgeModule } from "@angular/material/badge";
 import { NotifIconComponent } from "../../notif-icon/notif-icon.component";
+import { ProfileComponent } from "../../profile/componenets/profile/profile.component";
 
 @Component({
   selector: "app-layout",
@@ -23,10 +24,10 @@ import { NotifIconComponent } from "../../notif-icon/notif-icon.component";
     MatButtonModule,
     MatIconModule,
     NotifIconComponent,
+    ProfileComponent,
   ],
   templateUrl: "./layout.component.html",
   styleUrl: "./layout.component.css",
-  standalone: true,
 })
 export class LayoutComponent {
   collapsed = signal<boolean>(false);

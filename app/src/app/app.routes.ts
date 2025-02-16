@@ -14,7 +14,7 @@ import { isAuthenticatedCanActivateGuard } from "./auth/guards/is-authenticated-
 export const routes: Routes = [
   {
     path: "",
-   // canMatch: [isNotAuthenticatedCanMatchGuard],
+    canMatch: [isNotAuthenticatedCanMatchGuard],
     component: HomepageComponent,
   },
   {
